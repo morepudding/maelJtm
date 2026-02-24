@@ -101,6 +101,40 @@ Avec une équipe réduite à 3 personnes aux profils différents (gestion de pro
 - **AXE-05** — Sécurité renforcée, conformité RGPD (→ PF-07)
 - **AXE-06** — Marque blanche SaaS multi-tenant (→ PF-09)
 
+
+### Arborescence de dépendance PF → AXE
+
+```mermaid
+flowchart LR
+    PF01["🔴 PF-01 Monolithe obsolète"] --> AXE01["AXE-01 Architecture modulaire"]
+    PF02["🔴 PF-02 Logique éparpillée"] --> AXE01
+    PF03["🔴 PF-03 Stocks incohérents"] --> AXE01
+    PF03 --> AXE02["AXE-02 Stocks temps réel"]
+    PF04["🔴 PF-04 WCF sans source"] --> AXE02
+    PF05["🔴 PF-05 Pas de Git"] --> AXE03["AXE-03 Git + CI/CD"]
+    PF08["🟠 PF-08 Dette humaine"] --> AXE03
+    PF01 --> AXE04["AXE-04 Migration cloud"]
+    PF06["🟠 PF-06 BDD coûteuse"] --> AXE04
+    PF07["🟠 PF-07 Sécurité insuffisante"] --> AXE05["AXE-05 Sécurité & RGPD"]
+    PF09["🟡 PF-09 Marque blanche KO"] --> AXE06["AXE-06 Marque blanche SaaS"]
+
+    style PF01 fill:#ffebee,stroke:#c62828
+    style PF02 fill:#ffebee,stroke:#c62828
+    style PF03 fill:#ffebee,stroke:#c62828
+    style PF04 fill:#ffebee,stroke:#c62828
+    style PF05 fill:#ffebee,stroke:#c62828
+    style PF06 fill:#fff3e0,stroke:#ef6c00
+    style PF07 fill:#fff3e0,stroke:#ef6c00
+    style PF08 fill:#fff3e0,stroke:#ef6c00
+    style PF09 fill:#fffde7,stroke:#f9a825
+    style AXE01 fill:#e8f5e9,stroke:#2e7d32
+    style AXE02 fill:#e8f5e9,stroke:#2e7d32
+    style AXE03 fill:#e8f5e9,stroke:#2e7d32
+    style AXE04 fill:#e8f5e9,stroke:#2e7d32
+    style AXE05 fill:#e8f5e9,stroke:#2e7d32
+    style AXE06 fill:#e8f5e9,stroke:#2e7d32
+```
+
 ---
 
 ## 4. Comparaison des styles architecturaux

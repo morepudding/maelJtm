@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             id="Definitions_BricoLoc"
+             targetNamespace="http://bricoloc.fr/architecture">
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- COLLABORATION : Architecture logique en couches           -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <collaboration id="Collab_Architecture">
+
+    <!-- ── COUCHE 1 : CLIENTS ── -->
+    <participant id="Pool_Clients" name="Couche Clients" processRef="Process_Clients"/>
+
+    <!-- ── COUCHE 2 : API GATEWAY ── -->
+    <participant id="Pool_Gateway" name="Couche API Gateway — Spring Cloud Gateway" processRef="Process_Gateway"/>
+
+    <!-- ── COUCHE 3 : MONOLITHE MODULAIRE ── -->
+    <participant id="Pool_App" name="Couche Applicative — Monolithe Modulaire (Spring Boot 3 / Java 21)" processRef="Process_App"/>
+
+    <!-- ── COUCHE 4 : BUS ÉVÉNEMENTIEL ── -->
+    <participant id="Pool_MQ" name="Couche Messagerie — Bus Événementiel (RabbitMQ)" processRef="Process_MQ"/>
+
+    <!-- ── COUCHE 5 : DONNÉES ── -->
+    <participant id="Pool_Data" name="Couche Données" processRef="Process_Data"/>
+
+    <!-- ── SYSTÈMES TIERS ── -->
+    <participant id="Pool_Tiers" name="Systèmes Tiers" processRef="Process_Tiers"/>
+
+    <!-- ═══ FLUX ENTRE COUCHES ═══ -->
+
+    <!-- Clients → Gateway -->
+    <messageFlow id="MF_Web_GW" name="HTTPS" sourceRef="Task_ClientWeb" targetRef="Task_GW_Auth"/>
+    <messageFlow id="MF_Mobile_GW" name="HTTPS" sourceRef="Task_ClientMobile" targetRef="Task_GW_Auth"/>
+    <messageFlow id="MF_Partner_GW" name="REST API v1" sourceRef="Task_ClientPartner" targetRef="Task_GW_Routing"/>
+    <messageFlow id="MF_SSO" name="SSO Azure AD" sourceRef="Task_ClientSalarie" targetRef="Task_GW_Auth"/>
+
+    <!-- Gateway → Modules -->
+    <messageFlow id="MF_GW_Cat" name="Route" sourceRef="Task_GW_Routing" targetRef="Task_Catalogue"/>
+    <messageFlow id="MF_GW_Res" name="Route" sourceRef="Task_GW_Routing" targetRef="Task_Reservation"/>
+    <messageFlow id="MF_GW_Stk" name="Route" sourceRef="Task_GW_Routing" targetRef="Task_Stocks"/>
+    <messageFlow id="MF_GW_Pay" name="Route" sourceRef="Task_GW_Routing" targetRef="Task_Paiement"/>
+    <messageFlow id="MF_GW_Usr" name="Route" sourceRef="Task_GW_Routing" targetRef="Task_Utilisateurs"/>
+    <messageFlow id="MF_GW_Adm" name="Route" sourceRef="Task_GW_Routing" targetRef="Task_Admin"/>
+
+    <!-- Modules → Bus MQ (publication) -->
+    <messageFlow id="MF_Stk_MQ" name="Publie StockUpdated / StockLow" sourceRef="Task_Stocks" targetRef="Task_MQ_Stock"/>
+    <messageFlow id="MF_Res_MQ" name="Publie ReservationCreated/Confirmed/Cancelled" sourceRef="Task_Reservation" targetRef="Task_MQ_Reservation"/>
+    <messageFlow id="MF_Pay_MQ" name="Publie PaymentValidated/Failed" sourceRef="Task_Paiement" targetRef="Task_MQ_Payment"/>
+    <messageFlow id="MF_Int_MQ" name="Publie PriceUpdated" sourceRef="Task_Integration" targetRef="Task_MQ_Price"/>
+
+    <!-- Bus MQ → Modules (consommation) -->
+    <messageFlow id="MF_MQ_Cat" name="Consomme StockUpdated, PriceUpdated" sourceRef="Task_MQ_Stock" targetRef="Task_Catalogue"/>
+    <messageFlow id="MF_MQ_Not" name="Consomme tous événements" sourceRef="Task_MQ_Reservation" targetRef="Task_Notifications"/>
+    <messageFlow id="MF_MQ_PayC" name="Consomme ReservationConfirmed" sourceRef="Task_MQ_Reservation" targetRef="Task_Paiement"/>
+    <messageFlow id="MF_MQ_ResC" name="Consomme PaymentValidated" sourceRef="Task_MQ_Payment" targetRef="Task_Reservation"/>
+
+    <!-- Modules → Données -->
+    <messageFlow id="MF_App_PG" name="JDBC" sourceRef="Task_Catalogue" targetRef="Task_PostgreSQL"/>
+    <messageFlow id="MF_Cat_Redis" name="Cache" sourceRef="Task_Catalogue" targetRef="Task_Redis"/>
+    <messageFlow id="MF_App_Blob" name="Fichiers" sourceRef="Task_Admin" targetRef="Task_Blob"/>
+
+    <!-- Intégration → Tiers -->
+    <messageFlow id="MF_SAP" name="Webhook stocks" sourceRef="Task_SAP" targetRef="Task_Integration"/>
+    <messageFlow id="MF_Stripe" name="API Stripe v3 + Webhooks" sourceRef="Task_Stripe" targetRef="Task_Paiement"/>
+    <messageFlow id="MF_Prix" name="APIs REST" sourceRef="Task_Integration" targetRef="Task_CompPrix"/>
+    <messageFlow id="MF_PBI" name="REST API analytics" sourceRef="Task_PowerBI" targetRef="Task_Integration"/>
+  </collaboration>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PROCESS : Couche Clients                                  -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <process id="Process_Clients" isExecutable="false">
+    <laneSet id="LS_Clients">
+      <lane id="Lane_Web" name="Navigateur Web (B2C / B2B)">
+        <flowNodeRef>Task_ClientWeb</flowNodeRef>
+      </lane>
+      <lane id="Lane_Mobile" name="Application Mobile">
+        <flowNodeRef>Task_ClientMobile</flowNodeRef>
+      </lane>
+      <lane id="Lane_Partner" name="Partenaire Marque Blanche">
+        <flowNodeRef>Task_ClientPartner</flowNodeRef>
+      </lane>
+      <lane id="Lane_Salarie" name="Salarié (SSO Azure AD)">
+        <flowNodeRef>Task_ClientSalarie</flowNodeRef>
+      </lane>
+    </laneSet>
+    <task id="Task_ClientWeb" name="Client Web"/>
+    <task id="Task_ClientMobile" name="Client Mobile"/>
+    <task id="Task_ClientPartner" name="Partenaire — REST API v1"/>
+    <task id="Task_ClientSalarie" name="Salarié — Azure AD SSO"/>
+  </process>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PROCESS : Couche API Gateway                              -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <process id="Process_Gateway" isExecutable="false">
+    <laneSet id="LS_Gateway">
+      <lane id="Lane_GW_Auth" name="Authentification &amp; Autorisation (JWT)">
+        <flowNodeRef>Task_GW_Auth</flowNodeRef>
+      </lane>
+      <lane id="Lane_GW_Routing" name="Routage, Rate Limiting, TLS, Versioning">
+        <flowNodeRef>Task_GW_Routing</flowNodeRef>
+      </lane>
+    </laneSet>
+    <task id="Task_GW_Auth" name="Validation JWT — Tokens émis par module Utilisateurs"/>
+    <task id="Task_GW_Routing" name="Routage vers modules — /api/v1/, /api/v2/"/>
+    <sequenceFlow id="SF_GW" sourceRef="Task_GW_Auth" targetRef="Task_GW_Routing"/>
+  </process>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PROCESS : Couche Applicative (Monolithe Modulaire)        -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <process id="Process_App" isExecutable="false">
+    <laneSet id="LS_App">
+      <lane id="Lane_Catalogue" name="Module Catalogue">
+        <flowNodeRef>Task_Catalogue</flowNodeRef>
+      </lane>
+      <lane id="Lane_Reservation" name="Module Réservation">
+        <flowNodeRef>Task_Reservation</flowNodeRef>
+      </lane>
+      <lane id="Lane_Stocks" name="Module Stocks">
+        <flowNodeRef>Task_Stocks</flowNodeRef>
+      </lane>
+      <lane id="Lane_Paiement" name="Module Paiement">
+        <flowNodeRef>Task_Paiement</flowNodeRef>
+      </lane>
+      <lane id="Lane_Utilisateurs" name="Module Utilisateurs">
+        <flowNodeRef>Task_Utilisateurs</flowNodeRef>
+      </lane>
+      <lane id="Lane_Notifications" name="Module Notifications">
+        <flowNodeRef>Task_Notifications</flowNodeRef>
+      </lane>
+      <lane id="Lane_Admin" name="Module Admin">
+        <flowNodeRef>Task_Admin</flowNodeRef>
+      </lane>
+      <lane id="Lane_MB" name="Module Marque Blanche (Multi-tenant)">
+        <flowNodeRef>Task_MarqueBlanche</flowNodeRef>
+      </lane>
+      <lane id="Lane_Integration" name="Module Intégration">
+        <flowNodeRef>Task_Integration</flowNodeRef>
+      </lane>
+    </laneSet>
+    <task id="Task_Catalogue" name="Catalogue — Outils, catégories, recherche, comparateur prix, cache Redis"/>
+    <task id="Task_Reservation" name="Réservation — Cycle de vie location, calendrier, P2P, annulation"/>
+    <task id="Task_Stocks" name="Stocks — Source de vérité dispo, temps réel SAP, inter-entrepôts"/>
+    <task id="Task_Paiement" name="Paiement — Stripe v3, PCI-DSS, transactions, remboursements"/>
+    <task id="Task_Utilisateurs" name="Utilisateurs — Auth JWT, RBAC (5 rôles), RGPD, Azure AD SSO"/>
+    <task id="Task_Notifications" name="Notifications — Emails, alertes logisticiens, chat, push"/>
+    <task id="Task_Admin" name="Admin — Back-office, gestion catalogue/stocks/utilisateurs/partenaires"/>
+    <task id="Task_MarqueBlanche" name="Marque Blanche — Multi-tenant, personnalisation, APIs partenaire"/>
+    <task id="Task_Integration" name="Intégration — Passerelle SAP, comparateur prix, Power BI, transporteurs"/>
+  </process>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PROCESS : Couche Bus Événementiel (RabbitMQ)              -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <process id="Process_MQ" isExecutable="false">
+    <laneSet id="LS_MQ">
+      <lane id="Lane_MQ_Events" name="Événements asynchrones">
+        <flowNodeRef>Task_MQ_Stock</flowNodeRef>
+        <flowNodeRef>Task_MQ_Reservation</flowNodeRef>
+        <flowNodeRef>Task_MQ_Payment</flowNodeRef>
+        <flowNodeRef>Task_MQ_Price</flowNodeRef>
+        <flowNodeRef>Task_MQ_StockLow</flowNodeRef>
+      </lane>
+    </laneSet>
+    <task id="Task_MQ_Stock" name="StockUpdated"/>
+    <task id="Task_MQ_Reservation" name="ReservationCreated / ReservationConfirmed / ReservationCancelled"/>
+    <task id="Task_MQ_Payment" name="PaymentValidated / PaymentFailed"/>
+    <task id="Task_MQ_Price" name="PriceUpdated"/>
+    <task id="Task_MQ_StockLow" name="StockLow"/>
+  </process>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PROCESS : Couche Données                                  -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <process id="Process_Data" isExecutable="false">
+    <laneSet id="LS_Data">
+      <lane id="Lane_PG" name="PostgreSQL 16 (schéma par module)">
+        <flowNodeRef>Task_PostgreSQL</flowNodeRef>
+      </lane>
+      <lane id="Lane_Redis" name="Redis (Cache catalogue / Sessions)">
+        <flowNodeRef>Task_Redis</flowNodeRef>
+      </lane>
+      <lane id="Lane_Blob" name="Azure Blob Storage (Photos, Docs, Factures PDF)">
+        <flowNodeRef>Task_Blob</flowNodeRef>
+      </lane>
+    </laneSet>
+    <task id="Task_PostgreSQL" name="bricolocDB — Base principale, schéma dédié par module"/>
+    <task id="Task_Redis" name="Cache — Fiches catalogue (TTL configurable), sessions utilisateur"/>
+    <task id="Task_Blob" name="Stockage fichiers — Photos outils, documents, factures PDF"/>
+  </process>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- PROCESS : Systèmes Tiers                                  -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <process id="Process_Tiers" isExecutable="false">
+    <laneSet id="LS_Tiers">
+      <lane id="Lane_SAP" name="SAP Business One (Stocks, Compta)">
+        <flowNodeRef>Task_SAP</flowNodeRef>
+      </lane>
+      <lane id="Lane_Stripe" name="Stripe (Paiement en ligne)">
+        <flowNodeRef>Task_Stripe</flowNodeRef>
+      </lane>
+      <lane id="Lane_CompPrix" name="Comparateur de Prix (SaaS)">
+        <flowNodeRef>Task_CompPrix</flowNodeRef>
+      </lane>
+      <lane id="Lane_PowerBI" name="Power BI (Analytics)">
+        <flowNodeRef>Task_PowerBI</flowNodeRef>
+      </lane>
+    </laneSet>
+    <task id="Task_SAP" name="SAP B1 9.X — Webhook stocks vers module Intégration"/>
+    <task id="Task_Stripe" name="Stripe — API v3 + Webhooks vers module Paiement"/>
+    <task id="Task_CompPrix" name="Comparateur de prix — APIs REST via module Intégration"/>
+    <task id="Task_PowerBI" name="Power BI — Pull REST API /api/v1/analytics"/>
+  </process>
+
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <!-- DIAGRAMME BPMN (positions visuelles)                      -->
+  <!-- ══════════════════════════════════════════════════════════ -->
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Architecture">
+    <bpmndi:BPMNPlane id="BPMNPlane_Architecture" bpmnElement="Collab_Architecture">
+
+      <!-- ═══ POOL CLIENTS ═══ -->
+      <bpmndi:BPMNShape id="Shape_Pool_Clients" bpmnElement="Pool_Clients" isHorizontal="true">
+        <dc:Bounds x="50" y="30" width="1400" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Web" bpmnElement="Lane_Web" isHorizontal="true">
+        <dc:Bounds x="80" y="30" width="1370" height="75"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Mobile" bpmnElement="Lane_Mobile" isHorizontal="true">
+        <dc:Bounds x="80" y="105" width="1370" height="75"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Partner" bpmnElement="Lane_Partner" isHorizontal="true">
+        <dc:Bounds x="80" y="180" width="1370" height="75"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Salarie" bpmnElement="Lane_Salarie" isHorizontal="true">
+        <dc:Bounds x="80" y="255" width="1370" height="75"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_ClientWeb" bpmnElement="Task_ClientWeb">
+        <dc:Bounds x="200" y="45" width="200" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_ClientMobile" bpmnElement="Task_ClientMobile">
+        <dc:Bounds x="200" y="120" width="200" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_ClientPartner" bpmnElement="Task_ClientPartner">
+        <dc:Bounds x="200" y="195" width="200" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_ClientSalarie" bpmnElement="Task_ClientSalarie">
+        <dc:Bounds x="200" y="270" width="200" height="50"/>
+      </bpmndi:BPMNShape>
+
+      <!-- ═══ POOL API GATEWAY ═══ -->
+      <bpmndi:BPMNShape id="Shape_Pool_Gateway" bpmnElement="Pool_Gateway" isHorizontal="true">
+        <dc:Bounds x="50" y="370" width="1400" height="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_GW_Auth" bpmnElement="Lane_GW_Auth" isHorizontal="true">
+        <dc:Bounds x="80" y="370" width="1370" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_GW_Routing" bpmnElement="Lane_GW_Routing" isHorizontal="true">
+        <dc:Bounds x="80" y="460" width="1370" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Auth" bpmnElement="Task_GW_Auth">
+        <dc:Bounds x="200" y="390" width="350" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Routing" bpmnElement="Task_GW_Routing">
+        <dc:Bounds x="200" y="475" width="350" height="50"/>
+      </bpmndi:BPMNShape>
+
+      <!-- ═══ POOL MONOLITHE MODULAIRE ═══ -->
+      <bpmndi:BPMNShape id="Shape_Pool_App" bpmnElement="Pool_App" isHorizontal="true">
+        <dc:Bounds x="50" y="590" width="1400" height="720"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Catalogue" bpmnElement="Lane_Catalogue" isHorizontal="true">
+        <dc:Bounds x="80" y="590" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Reservation" bpmnElement="Lane_Reservation" isHorizontal="true">
+        <dc:Bounds x="80" y="670" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Stocks" bpmnElement="Lane_Stocks" isHorizontal="true">
+        <dc:Bounds x="80" y="750" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Paiement" bpmnElement="Lane_Paiement" isHorizontal="true">
+        <dc:Bounds x="80" y="830" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Utilisateurs" bpmnElement="Lane_Utilisateurs" isHorizontal="true">
+        <dc:Bounds x="80" y="910" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Notifications" bpmnElement="Lane_Notifications" isHorizontal="true">
+        <dc:Bounds x="80" y="990" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Admin" bpmnElement="Lane_Admin" isHorizontal="true">
+        <dc:Bounds x="80" y="1070" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_MB" bpmnElement="Lane_MB" isHorizontal="true">
+        <dc:Bounds x="80" y="1150" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Integration" bpmnElement="Lane_Integration" isHorizontal="true">
+        <dc:Bounds x="80" y="1230" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Catalogue" bpmnElement="Task_Catalogue">
+        <dc:Bounds x="200" y="603" width="500" height="54"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Reservation" bpmnElement="Task_Reservation">
+        <dc:Bounds x="200" y="683" width="500" height="54"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Stocks" bpmnElement="Task_Stocks">
+        <dc:Bounds x="200" y="763" width="500" height="54"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Paiement" bpmnElement="Task_Paiement">
+        <dc:Bounds x="200" y="843" width="500" height="54"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Utilisateurs" bpmnElement="Task_Utilisateurs">
+        <dc:Bounds x="200" y="923" width="500" height="54"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Notifications" bpmnElement="Task_Notifications">
+        <dc:Bounds x="200" y="1003" width="500" height="54"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Admin" bpmnElement="Task_Admin">
+        <dc:Bounds x="200" y="1083" width="500" height="54"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_MarqueBlanche" bpmnElement="Task_MarqueBlanche">
+        <dc:Bounds x="200" y="1163" width="500" height="54"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Integration" bpmnElement="Task_Integration">
+        <dc:Bounds x="200" y="1243" width="500" height="54"/>
+      </bpmndi:BPMNShape>
+
+      <!-- ═══ POOL BUS ÉVÉNEMENTIEL ═══ -->
+      <bpmndi:BPMNShape id="Shape_Pool_MQ" bpmnElement="Pool_MQ" isHorizontal="true">
+        <dc:Bounds x="50" y="1350" width="1400" height="160"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_MQ" bpmnElement="Lane_MQ_Events" isHorizontal="true">
+        <dc:Bounds x="80" y="1350" width="1370" height="160"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_MQ_Stock" bpmnElement="Task_MQ_Stock">
+        <dc:Bounds x="120" y="1380" width="220" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_MQ_Reservation" bpmnElement="Task_MQ_Reservation">
+        <dc:Bounds x="370" y="1380" width="300" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_MQ_Payment" bpmnElement="Task_MQ_Payment">
+        <dc:Bounds x="700" y="1380" width="250" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_MQ_Price" bpmnElement="Task_MQ_Price">
+        <dc:Bounds x="120" y="1445" width="220" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_MQ_StockLow" bpmnElement="Task_MQ_StockLow">
+        <dc:Bounds x="370" y="1445" width="220" height="50"/>
+      </bpmndi:BPMNShape>
+
+      <!-- ═══ POOL DONNÉES ═══ -->
+      <bpmndi:BPMNShape id="Shape_Pool_Data" bpmnElement="Pool_Data" isHorizontal="true">
+        <dc:Bounds x="50" y="1550" width="1400" height="260"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_PG" bpmnElement="Lane_PG" isHorizontal="true">
+        <dc:Bounds x="80" y="1550" width="1370" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Redis" bpmnElement="Lane_Redis" isHorizontal="true">
+        <dc:Bounds x="80" y="1640" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Blob" bpmnElement="Lane_Blob" isHorizontal="true">
+        <dc:Bounds x="80" y="1720" width="1370" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_PostgreSQL" bpmnElement="Task_PostgreSQL">
+        <dc:Bounds x="200" y="1568" width="450" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Redis" bpmnElement="Task_Redis">
+        <dc:Bounds x="200" y="1655" width="450" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Blob" bpmnElement="Task_Blob">
+        <dc:Bounds x="200" y="1738" width="450" height="50"/>
+      </bpmndi:BPMNShape>
+
+      <!-- ═══ POOL SYSTÈMES TIERS ═══ -->
+      <bpmndi:BPMNShape id="Shape_Pool_Tiers" bpmnElement="Pool_Tiers" isHorizontal="true">
+        <dc:Bounds x="50" y="1850" width="1400" height="320"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_SAP" bpmnElement="Lane_SAP" isHorizontal="true">
+        <dc:Bounds x="80" y="1850" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Stripe" bpmnElement="Lane_Stripe" isHorizontal="true">
+        <dc:Bounds x="80" y="1930" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_CompPrix" bpmnElement="Lane_CompPrix" isHorizontal="true">
+        <dc:Bounds x="80" y="2010" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_PowerBI" bpmnElement="Lane_PowerBI" isHorizontal="true">
+        <dc:Bounds x="80" y="2090" width="1370" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_SAP" bpmnElement="Task_SAP">
+        <dc:Bounds x="200" y="1865" width="400" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Stripe" bpmnElement="Task_Stripe">
+        <dc:Bounds x="200" y="1945" width="400" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_CompPrix" bpmnElement="Task_CompPrix">
+        <dc:Bounds x="200" y="2025" width="400" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_PowerBI" bpmnElement="Task_PowerBI">
+        <dc:Bounds x="200" y="2105" width="400" height="50"/>
+      </bpmndi:BPMNShape>
+
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</definitions>
