@@ -12,12 +12,12 @@ Ce projet s'inscrit dans le cursus **Master 1 Architecte d'Application** à **CE
 
 L'équipe était initialement composée de **4 membres** :
 
-| Membre | Rôle initial | Spécialité |
-|---|---|---|
-| **Steven** | Analyste | Analyse de l'existant, recueil des exigences, formalisation des besoins |
-| **Romain** | Chef de projet | Coordination générale, planification, suivi de l'avancement et des livrables |
-| **Maëlle** | Lead Dev Back-end & Maître des BDD | Architecture back-end, modélisation des données, conception des bases de données |
-| **Loris** | Lead Dev Front-end & Maître du reste | Architecture front-end, intégrations tierces, livrables transverses |
+| Membre            | Rôle initial                         | Spécialité                                                                        |
+| ----------------- | ------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Steven**  | Analyste                              | Analyse de l'existant, recueil des exigences, formalisation des besoins             |
+| **Romain**  | Chef de projet                        | Coordination générale, planification, suivi de l'avancement et des livrables      |
+| **Maëlle** | Lead Dev Back-end & Maître des BDD   | Architecture back-end, modélisation des données, conception des bases de données |
+| **Loris**   | Lead Dev Front-end & Maître du reste | Architecture front-end, intégrations tierces, livrables transverses                |
 
 ### Départ de Steven et réorganisation
 
@@ -25,17 +25,17 @@ L'équipe était initialement composée de **4 membres** :
 
 La redistribution s'est faite selon les affinités et compétences de chacun :
 
-| Membre | Missions reprises de Steven | En plus de son rôle initial |
-|---|---|---|
-| **Romain** | Formalisation des axes d'amélioration, rédaction de la démarche de conception | Vision stratégique et lien avec les décideurs |
-| **Maëlle** | Analyse des bases de données existantes, identification des anomalies BDD (PL/SQL, schéma dégradé) | Conception de l'architecture de données cible (PostgreSQL, Redis) |
-| **Loris** | Cartographie du SI existant, schéma d'architecture, comparaison des styles architecturaux | Rédaction des justifications technologiques et de l'architecture logique |
+| Membre            | Missions reprises de Steven                                                                            | En plus de son rôle initial                                              |
+| ----------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| **Romain**  | Formalisation des axes d'amélioration, rédaction de la démarche de conception                       | Vision stratégique et lien avec les décideurs                           |
+| **Maëlle** | Analyse des bases de données existantes, identification des anomalies BDD (PL/SQL, schéma dégradé) | Conception de l'architecture de données cible (PostgreSQL, Redis)        |
+| **Loris**   | Cartographie du SI existant, schéma d'architecture, comparaison des styles architecturaux             | Rédaction des justifications technologiques et de l'architecture logique |
 
 ### Challenges rencontrés et surmontés
 
 #### Challenge 1 — Absorber la charge d'un membre en moins sans décaler les livrables
 
-Le départ de Steven a représenté une **perte de 25% de la capacité de travail** du groupe, alors que le volume de livrables attendu restait identique. L'équipe a réagi en réorganisant sa méthode de travail : des **points de synchronisation courts mais quotidiens** ont été mis en place pour éviter les doublons et les zones grises. Chaque membre a pris en charge des livrables supplémentaires en les intégrant dans son périmètre existant, plutôt que de traiter l'analyse comme un silo séparé. Cette approche a permis de **livrer l'intégralité du dossier dans les délais** sans sacrifier la qualité.
+Le départ de Steven a représenté une **perte de 25% de la capacité de travail** du groupe, alors que le volume de livrables attendu restait identique. L'équipe a réagi en réorganisant sa méthode de travail : des **points de synchronisation courts mais hebdomadaires** ont été mis en place pour éviter les doublons et les zones grises. Chaque membre a pris en charge des livrables supplémentaires en les intégrant dans son périmètre existant, plutôt que de traiter l'analyse comme un silo séparé. Cette approche a permis de **livrer l'intégralité du dossier dans les délais** sans sacrifier la qualité.
 
 #### Challenge 2 — Maintenir la cohérence de l'architecture sans analyste dédié
 
@@ -80,17 +80,17 @@ Avec une équipe réduite à 3 personnes aux profils différents (gestion de pro
 
 ### Points faibles (9 identifiés)
 
-| ID | Résumé | Criticité |
-|---|---|:---:|
-| PF-01 | Monolithe obsolète (Java EE 6, WebLogic, Oracle Linux 6.5 EOL) | 🔴 |
-| PF-02 | Logique métier éparpillée sur 3 couches (back, PL/SQL, front) | 🔴 |
-| PF-03 | Stocks incohérents — batch CSV quotidien, cause directe perte clients | 🔴 |
-| PF-04 | Service WCF sans code source — SPOF absolu sur 6 entrepôts | 🔴 |
-| PF-05 | Pas de gestion de configuration — FTP sans Git | 🔴 |
-| PF-06 | BDD Oracle surdimensionnée, coûteuse, schéma dégradé (>150 col) | 🟠 |
-| PF-07 | Sécurité insuffisante — comptes admin en BDD, accès directs, VM fantôme | 🟠 |
-| PF-08 | Dette humaine — dépendance DBA, équipe <6 ans ancienneté, innovation bloquée | 🟠 |
-| PF-09 | Marque blanche non compétitive — déploiement trop complexe chez partenaires | 🟡 |
+| ID    | Résumé                                                                          | Criticité |
+| ----- | --------------------------------------------------------------------------------- | :--------: |
+| PF-01 | Monolithe obsolète (Java EE 6, WebLogic, Oracle Linux 6.5 EOL)                   |     🔴     |
+| PF-02 | Logique métier éparpillée sur 3 couches (back, PL/SQL, front)                  |     🔴     |
+| PF-03 | Stocks incohérents — batch CSV quotidien, cause directe perte clients           |     🔴     |
+| PF-04 | Service WCF sans code source — SPOF absolu sur 6 entrepôts                      |     🔴     |
+| PF-05 | Pas de gestion de configuration — FTP sans Git                                   |     🔴     |
+| PF-06 | BDD Oracle surdimensionnée, coûteuse, schéma dégradé (>150 col)              |     🟠     |
+| PF-07 | Sécurité insuffisante — comptes admin en BDD, accès directs, VM fantôme      |     🟠     |
+| PF-08 | Dette humaine — dépendance DBA, équipe <6 ans ancienneté, innovation bloquée |     🟠     |
+| PF-09 | Marque blanche non compétitive — déploiement trop complexe chez partenaires    |     🟡     |
 
 ### Axes d'amélioration (6)
 
@@ -107,13 +107,13 @@ Avec une équipe réduite à 3 personnes aux profils différents (gestion de pro
 
 5 styles analysés sur 11 critères :
 
-| Style | Score /55 | Verdict BricoLoc |
-|---|:---:|---|
-| **Monolithe modulaire** | **40** | ✅ Faisable par 5 devs, migration progressive, ACID natif |
-| **Événementiel ciblé** | **40** | ✅ Idéal pour stocks temps réel et découplage SAP |
-| **Microservices** | 39 | ❌ Trop complexe (Kubernetes, DevOps) pour 5 devs |
-| **SOA / ESB** | 33 | ❌ ESB coûteux, gouvernance disproportionnée |
-| **N-tiers (actuel)** | 23 | ❌ Source de tous les problèmes actuels |
+| Style                           |  Score /55  | Verdict BricoLoc                                          |
+| ------------------------------- | :----------: | --------------------------------------------------------- |
+| **Monolithe modulaire**   | **40** | ✅ Faisable par 5 devs, migration progressive, ACID natif |
+| **Événementiel ciblé** | **40** | ✅ Idéal pour stocks temps réel et découplage SAP      |
+| **Microservices**         |      39      | ❌ Trop complexe (Kubernetes, DevOps) pour 5 devs         |
+| **SOA / ESB**             |      33      | ❌ ESB coûteux, gouvernance disproportionnée            |
+| **N-tiers (actuel)**      |      23      | ❌ Source de tous les problèmes actuels                  |
 
 **Recommandation** : architecture **hybride** = monolithe modulaire + événementiel ciblé + APIs REST (SOA légère sans ESB).
 
@@ -123,12 +123,12 @@ Avec une équipe réduite à 3 personnes aux profils différents (gestion de pro
 
 4 décisions structurantes évaluées sur 8 critères pondérés :
 
-| Décision | Retenu | Score | Justification clé |
-|---|---|:---:|---|
-| Framework back-end | **Spring Boot 3** | 4,90/5 | Compétences équipe, migration incrémentale depuis Spring 5, open-source |
-| SGBDR | **PostgreSQL 16** | 4,60/5 | Open-source, cloud-natif, élimine surcoût licences Oracle |
-| Bus de messages | **RabbitMQ** | 4,55/5 | Plus simple que Kafka pour 5 devs, compatible Spring AMQP |
-| Cloud | **Microsoft Azure** | 4,75/5 | Continuité écosystème Microsoft (AD, Office 365, Power BI) |
+| Décision          | Retenu                    | Score | Justification clé                                                         |
+| ------------------ | ------------------------- | :----: | -------------------------------------------------------------------------- |
+| Framework back-end | **Spring Boot 3**   | 4,90/5 | Compétences équipe, migration incrémentale depuis Spring 5, open-source |
+| SGBDR              | **PostgreSQL 16**   | 4,60/5 | Open-source, cloud-natif, élimine surcoût licences Oracle                |
+| Bus de messages    | **RabbitMQ**        | 4,55/5 | Plus simple que Kafka pour 5 devs, compatible Spring AMQP                  |
+| Cloud              | **Microsoft Azure** | 4,75/5 | Continuité écosystème Microsoft (AD, Office 365, Power BI)              |
 
 ---
 
@@ -168,17 +168,17 @@ Avec une équipe réduite à 3 personnes aux profils différents (gestion de pro
 
 ### 9 modules applicatifs
 
-| Module | Rôle clé |
-|---|---|
-| Catalogue | Outils, catégories, recherche, comparateur prix, cache Redis |
-| Réservation | Cycle de vie location, calendrier, P2P, annulation |
-| Stocks | Source de vérité dispo, temps réel SAP, inter-entrepôts |
-| Paiement | Stripe v3, PCI-DSS, transactions, remboursements |
-| Utilisateurs | Auth JWT, RBAC (5 rôles), RGPD, Azure AD SSO |
-| Notifications | Emails transactionnels, alertes logisticiens, chat, push (futur) |
-| Admin | Back-office, gestion catalogue/stocks/utilisateurs/partenaires |
+| Module         | Rôle clé                                                                 |
+| -------------- | -------------------------------------------------------------------------- |
+| Catalogue      | Outils, catégories, recherche, comparateur prix, cache Redis              |
+| Réservation   | Cycle de vie location, calendrier, P2P, annulation                         |
+| Stocks         | Source de vérité dispo, temps réel SAP, inter-entrepôts                |
+| Paiement       | Stripe v3, PCI-DSS, transactions, remboursements                           |
+| Utilisateurs   | Auth JWT, RBAC (5 rôles), RGPD, Azure AD SSO                              |
+| Notifications  | Emails transactionnels, alertes logisticiens, chat, push (futur)           |
+| Admin          | Back-office, gestion catalogue/stocks/utilisateurs/partenaires             |
 | Marque Blanche | Multi-tenant (schéma ou `tenant_id`), personnalisation, APIs partenaire |
-| Intégration | Passerelle unique vers SAP, comparateur prix, Power BI, transporteurs |
+| Intégration   | Passerelle unique vers SAP, comparateur prix, Power BI, transporteurs      |
 
 ### 4 systèmes tiers
 
