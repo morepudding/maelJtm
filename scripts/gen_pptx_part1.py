@@ -272,7 +272,7 @@ txt(slide, Inches(1), Inches(5.0), Inches(11.333), Inches(0.5),
 
 # Team
 txt(slide, Inches(1), Inches(5.5), Inches(11.333), Inches(0.5),
-    "Romain  ·  Maëlle  ·  Loris", size=18, color=TEXT_DARK, bold=True, align=PP_ALIGN.CENTER)
+    "Romain  ·  Maël  ·  Loris", size=18, color=TEXT_DARK, bold=True, align=PP_ALIGN.CENTER)
 
 add_logo(slide)
 add_notes(slide, "Bonjour, nous allons vous présenter notre dossier de conception pour BricoLoc 2.0, le projet de refonte de l'architecture logicielle.")
@@ -340,7 +340,7 @@ txt(slide, Inches(1.0), Inches(1.33), Inches(11), Inches(0.4),
 # Member cards
 members = [
     ("Romain", "Chef de projet", "Coordination, planification"),
-    ("Maëlle", "Lead Back-end & BDD", "Architecture back-end, BDD"),
+    ("Maël", "Lead Back-end & BDD", "Architecture back-end, BDD"),
     ("Loris", "Lead Front-end & reste", "Front-end, intégrations"),
 ]
 card_shades = [TERRACOTTA, TAUPE, SAND_LIGHT]

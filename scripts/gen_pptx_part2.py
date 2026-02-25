@@ -933,7 +933,7 @@ txt(slide, Inches(1), Inches(3.8), Inches(11.333), Inches(0.8),
 add_rect(slide, Inches(5.5), Inches(4.8), Inches(2.333), Inches(0.025), SAND_LIGHT)
 
 txt(slide, Inches(1), Inches(5.1), Inches(11.333), Inches(0.5),
-    "Romain  ·  Maëlle  ·  Loris", size=22, color=TEXT_DARK, bold=True, align=PP_ALIGN.CENTER)
+    "Romain  ·  Maël  ·  Loris", size=22, color=TEXT_DARK, bold=True, align=PP_ALIGN.CENTER)
 txt(slide, Inches(1), Inches(5.6), Inches(11.333), Inches(0.5),
     "Master 1 Architecte d'Application — CESI", size=16, color=TEXT_LIGHT, align=PP_ALIGN.CENTER)
 
