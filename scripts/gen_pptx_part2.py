@@ -9,9 +9,9 @@ from lxml import etree
 import os, math, random
 import copy
 
-OUTPUT = r"c:\Users\Loris\Documents\bricoloc\maelJtm\07-presentation\BricoLoc2_Presentation.pptx"
-LOGO_PATH = r"c:\Users\Loris\Documents\bricoloc\maelJtm\assets\image.png"
-ICON_DIR  = r"c:\Users\Loris\Documents\bricoloc\maelJtm\assets\icons2"
+OUTPUT = os.path.join(os.path.dirname(__file__), "..", "07-presentation", "BricoLoc2_Presentation.pptx")
+LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "image.png")
+ICON_DIR  = os.path.join(os.path.dirname(__file__), "..", "assets", "icons2")
 prs = Presentation(OUTPUT)
 
 # ═══════════════════════════════════════
@@ -451,13 +451,13 @@ slide_header(slide, "8. Styles retenus & justification")
 
 retained = [
     ("Monolithe modulaire", "Coeur de l'application",
-     "Une seule application bien organisée\nen 9 briques indépendantes.\nRéalisable par notre équipe de 5.\nMigration progressive possible.",
+     "Spring Boot 3 / Java 21 sur OVHcloud\nen 9 modules Maven indépendants.\nAPI Gateway (Spring Security + JWT)\nen entrée unique.",
      TERRACOTTA),
     ("Événementiel ciblé", "Stocks & alertes en temps réel",
-     "Les informations circulent instantanément\nentre les briques via des messages.\nFini le fichier CSV quotidien.\nSi une brique tombe, les autres continuent.",
+     "RabbitMQ (AMQP) — 3 événements clés :\nStockUpdated · ResaConfirmed\nPaymentValidated.\nFini le batch CSV quotidien.",
      TAUPE),
     ("APIs REST", "Ouverture aux partenaires",
-     "Des points d'accès documentés\npour les partenaires et outils externes.\nIntégration simple et autonome.\nPas de serveur intermédiaire coûteux.",
+     "Module Intégration = passerelle unique\nvers SAP, Stripe, Power BI, Comparateur.\nAPIs REST pour partenaires marque blanche.",
      BLUSH),
 ]
 for i, (title, scope, desc, color) in enumerate(retained):
@@ -482,7 +482,7 @@ add_box(slide, Inches(0.8), Inches(5.5), Inches(11.5), Inches(1.2), SAND_LIGHT, 
 txt(slide, Inches(1.0), Inches(5.55), Inches(11), Inches(0.4),
     "Approches écartées", size=14, color=TERRACOTTA, bold=True)
 txt(slide, Inches(1.0), Inches(5.95), Inches(11), Inches(0.6),
-    "Microservices (trop complexe pour 5 personnes)  ·  SOA/ESB (infrastructure surdimensionnée)  ·  Architecture actuelle (source des problèmes)  ·  Serverless (inadapté)",
+    "Microservices (trop complexe pour 5 personnes)  ·  SOA/ESB (surdimensionné)  ·  Architecture actuelle (source de problèmes)  ·  Abandonner Office 365 (inutile, relié proprement via le Module Notifications)",
     size=13, color=TEXT_MID)
 
 add_logo(slide)
@@ -497,13 +497,13 @@ slide_header(slide, "9. Choix technologiques")
 
 tech_choices = [
     ("Moteur applicatif", "Spring Boot 3", "4,90/5",
-     "Déjà maîtrisé par l'équipe\nMigration progressive depuis l'existant\nGratuit et open-source", TERRACOTTA),
+     "Remplace WebLogic 12c + Java EE 6\nMigration progressive (Strangler Fig)\nAPI Gateway intégrée (Spring Security)", TERRACOTTA),
     ("Base de données", "PostgreSQL 16", "4,60/5",
-     "Gratuit, remplacement d'Oracle\nUtilisé par les plus grands acteurs\nCompatible avec le cloud", TAUPE),
+     "Remplace le cluster Oracle 11g R2\nUne seule base bricolocDB unifiée\n+ Redis pour le cache catalogue", TAUPE),
     ("Messagerie", "RabbitMQ", "4,55/5",
-     "Simple à mettre en place\nStocks mis à jour instantanément\nAdapté à la taille de BricoLoc", BLUSH),
+     "Remplace le batch CSV quotidien SAP\n3 événements : StockUpdated,\nResaConfirmed, PaymentValidated", BLUSH),
     ("Hébergement cloud", "OVHcloud", "4,50/5",
-     "Souveraineté (100% européen)\nCoûts réseau prévisibles et gérés\nChampion du refroidissement Green IT", TERRACOTTA),
+     "Remplace l'hébergement on-premise\nvRack privé + DMZ API Gateway\nSouveraineté RGPD + Green IT", TERRACOTTA),
 ]
 for i, (decision, tech, score, justif, color) in enumerate(tech_choices):
     x = Inches(0.6 + (i % 2) * 6.2)
@@ -621,67 +621,23 @@ add_notes(slide, "Le choix s'est porté sur OVHcloud. Pourquoi ? Parce que l'int
 add_section_slide("Architecture & Conception", "Du diagnostic aux solutions")
 
 # ═══════════════════════════════════════
-# SLIDE 13 : ARCHITECTURE LOGIQUE — VUE D'ENSEMBLE (simplifiée)
+# SLIDE 13 : ARCHITECTURE CIBLE (schéma visuel placeholder)
 # ═══════════════════════════════════════
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 set_slide_bg(slide)
-slide_header(slide, "10. Architecture logique — Vue d'ensemble")
+slide_header(slide, "10. Architecture cible — Infrastructure OVHcloud")
 
-# 5 couches empilées, largeur centrée, labels clairs et gros
-layer_x = Inches(2.0)
-layer_w = Inches(9.3)
-layer_h = Inches(0.9)
+txt(slide, Inches(0.5), Inches(1.2), Inches(12.3), Inches(0.4),
+    "Source : schema-infrastructure-cible-v4.drawio", size=14, color=TEXT_MID, italic=True)
 
-layers = [
-    ("Utilisateurs", "Web · Mobile · Partenaires · Salariés", SAND_LIGHT, TAUPE, TEXT_DARK),
-    ("Point d'entrée sécurisé", "Authentification · Protection · Routage", WHITE_BG, BLUSH, TEXT_DARK),
-    ("Application BricoLoc 2.0", "9 modules métier indépendants", WHITE_BG, TERRACOTTA, TERRACOTTA),
-    ("Messagerie temps réel", "Communication instantanée entre modules", WHITE_BG, BLUSH, TEXT_DARK),
-    ("Stockage des données", "Base de données · Cache · Fichiers", SAND_LIGHT, TAUPE, TEXT_DARK),
-]
-
-_layer_icons = ["user", "shield", "gear", "message", "database"]
-for i, (name, sub, bg, border_c, txt_c) in enumerate(layers):
-    y = Inches(1.3) + i * (layer_h + Inches(0.15))
-    add_box(slide, layer_x, y, layer_w, layer_h, bg, border_c, Pt(2))
-    txt(slide, layer_x + Inches(0.3), y + Inches(0.08), Inches(8.5), Inches(0.45),
-        name, size=18, color=txt_c, bold=True)
-    txt(slide, layer_x + Inches(0.3), y + Inches(0.5), Inches(8.5), Inches(0.35),
-        sub, size=13, color=TEXT_MID)
-    # PNG icon at right of each layer
-    add_icon(slide, _layer_icons[i], layer_x + layer_w - Inches(0.48), y + Inches(0.25), Inches(0.4))
-
-    # Arrow between layers (except after last)
-    if i < len(layers) - 1:
-        arrow_y = y + layer_h + Inches(0.01)
-        add_down_arrow(slide, Inches(6.5), arrow_y, Inches(0.3), Inches(0.13), border_c)
-
-# --- Application layer: 9 mini-modules inside layer 3 ---
-y_app = Inches(1.3) + 2 * (layer_h + Inches(0.15))
-mods = ["Catalogue", "Réservation", "Stocks", "Paiement", "Utilisateurs",
-        "Notifications", "Admin", "Marque Blanche", "Intégration"]
-for mi, mod in enumerate(mods):
-    mx = layer_x + Inches(5.0 + (mi % 3) * 1.4)
-    my = y_app + Inches(0.08 + (mi // 3) * 0.26)
-    add_circle(slide, mx - Inches(0.15), my + Inches(0.04), Inches(0.1), TERRACOTTA)
-    txt(slide, mx, my, Inches(1.3), Inches(0.25), mod, size=8, color=TEXT_MID)
-
-# --- SYSTÈMES TIERS (côté gauche) ---
-add_box(slide, Inches(0.2), Inches(2.5), Inches(1.6), Inches(3.5), SAND_LIGHT, TERRACOTTA, Pt(2))
-txt(slide, Inches(0.25), Inches(2.55), Inches(1.5), Inches(0.35),
-    "Partenaires", size=12, color=TERRACOTTA, bold=True, align=PP_ALIGN.CENTER)
-bullets(slide, Inches(0.3), Inches(2.9), Inches(1.4), Inches(2.8), [
-    "SAP", "  Stocks & compta", "",
-    "Stripe", "  Paiements", "",
-    "Power BI", "  Analyse",
-], size=9, color=TEXT_MID)
-
-# Arrows Tiers <> App
-add_arrow(slide, Inches(1.82), Inches(3.5), Inches(0.4), Inches(0.2), TERRACOTTA)
-add_left_arrow(slide, Inches(1.82), Inches(4.0), Inches(0.4), Inches(0.2), TERRACOTTA)
+# Placeholder box for the Draw.io image
+ph_box = add_box(slide, Inches(1.0), Inches(1.8), Inches(11.333), Inches(5.0), WHITE_BG, BORDER, Pt(2))
+ph_box.shadow.inherit = False
+txt(slide, Inches(1.0), Inches(4.0), Inches(11.333), Inches(0.5),
+    "[ Insérer ici l'image de schema-infrastructure-cible-v4.drawio ]", size=18, color=TEXT_LIGHT, align=PP_ALIGN.CENTER)
 
 add_logo(slide)
-add_notes(slide, "Vue d'ensemble en 5 couches. De haut en bas : présentation (ce que voit l'utilisateur), contrôleurs (qui reçoivent les requêtes), services métier (la logique), messagerie (communication entre modules), infrastructure (base de données et cloud).")
+add_notes(slide, "Le schéma cible montre comment les choix technologiques s'articulent dans une infrastructure OVHcloud : DMZ sécurisée via API Gateway, réseau vRack privé, le monolithe modulaire et ses 9 briques, communication via RabbitMQ, et PostgreSQL / Redis pour les données. Tous les services tiers (SAP, Stripe, Office 365) sont gérés proprement en marge du réseau.")
 
 # ═══════════════════════════════════════
 # SLIDE 14 : MODULES — Cercle Vertueux
@@ -712,17 +668,17 @@ ring.shadow.inherit = False
 # Modules classification
 mods_data = [
     # CORE
-    ("Catalogue", "Outils & recherche", "cart", TERRACOTTA),
+    ("Catalogue", "Outils · Recherche · Cache", "cart", TERRACOTTA),
     ("Réservation", "Locations & calendrier", "message", TERRACOTTA),
-    ("Stocks", "Temps réel", "stock", TERRACOTTA),
+    ("Stocks", "Source vérité unique · SAP", "stock", TERRACOTTA),
     # SUPPORT
-    ("Paiement", "Transactions", "cart", TAUPE),
-    ("Utilisateurs", "Comptes & accès", "user", TAUPE),
-    ("Notifications", "Alertes", "message", TAUPE),
+    ("Paiement", "Stripe API v3 · PCI-DSS", "cart", TAUPE),
+    ("Utilisateurs", "Auth JWT · RBAC · Entra ID", "user", TAUPE),
+    ("Notifications", "Emails SMTP · Alertes", "message", TAUPE),
     # PERIPHERAL
-    ("Admin", "Back-office", "gear", BLUSH),
-    ("Marque Blanche", "SaaS", "globe", BLUSH),
-    ("Intégration", "SAP/Stripe", "server", BLUSH),
+    ("Admin", "Back-office dédié", "gear", BLUSH),
+    ("Marque Blanche", "SaaS multi-tenant", "globe", BLUSH),
+    ("Intégration", "Passerelle unique REST", "server", BLUSH),
 ]
 
 radius = Inches(2.8)

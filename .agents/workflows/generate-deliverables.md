@@ -18,6 +18,8 @@ Review the BricoLoc context and course materials to make sure the deliverables m
 **Base Context to always review:**
 - `02-contexte/contexte-bricoloc.md`
 - `08 - Cours/grille_évaluation.md`
+- `05-architecture/matrice-choix-cloud-v2.md`
+- `05-architecture/styles-retenus-justification.md`
 
 **Professor's Course Materials (Consult when relevant to accurately embody the course):**
 - **TPs & Generalites:** `08 - Cours/INFAL235 - TP2 _ sujet.pdf`, `08 - Cours/INFAL235 - TP3 - sujet.pdf`, `08 - Cours/Partie 1 - Généralités.pdf`

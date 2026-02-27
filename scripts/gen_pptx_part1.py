@@ -12,9 +12,9 @@ prs = Presentation()
 prs.slide_width = Inches(13.333)
 prs.slide_height = Inches(7.5)
 
-LOGO_PATH = r"c:\Users\Loris\Documents\bricoloc\maelJtm\assets\image.png"
-ICON_DIR  = r"c:\Users\Loris\Documents\bricoloc\maelJtm\assets\icons2"
-OUTPUT = r"c:\Users\Loris\Documents\bricoloc\maelJtm\07-presentation\BricoLoc2_Presentation.pptx"
+LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "image.png")
+ICON_DIR  = os.path.join(os.path.dirname(__file__), "..", "assets", "icons2")
+OUTPUT = os.path.join(os.path.dirname(__file__), "..", "07-presentation", "BricoLoc2_Presentation.pptx")
 
 # ═══════════════════════════════════════
 # DESIGN SYSTEM — Palette pastel chaleureuse
@@ -637,15 +637,15 @@ set_slide_bg(slide)
 slide_header(slide, "4. Points faibles identifiés")
 
 pf_data = [
-    ("PF-01", "Monolithe obsolète", "Critique"),
-    ("PF-02", "Logique métier éparpillée (3 couches)", "Critique"),
-    ("PF-03", "Stocks incohérents — perte de clients", "Critique"),
-    ("PF-04", "WCF sans code source — SPOF absolu", "Critique"),
-    ("PF-05", "Pas de gestion de configuration (FTP)", "Critique"),
-    ("PF-06", "BDD Oracle surdimensionnée & coûteuse", "Elevé"),
-    ("PF-07", "Sécurité insuffisante", "Elevé"),
-    ("PF-08", "Dette humaine & organisationnelle", "Elevé"),
-    ("PF-09", "Marque blanche non compétitive", "Modéré"),
+    ("PF-01", "Monolithe obsolète — WebLogic 12c + Java EE 6 sur Oracle Linux 6.5 (EOL)", "Critique"),
+    ("PF-02", "Logique métier éparpillée — front Spring 5, back Java EE, PL/SQL Oracle", "Critique"),
+    ("PF-03", "Stocks incohérents — batch CSV quotidien SAP → PL/SQL (24h latence)", "Critique"),
+    ("PF-04", "Service WCF VB.NET — code source perdu, SPOF sur les stocks", "Critique"),
+    ("PF-05", "Codes sources sur serveur FTP Ubuntu — aucun Git ni versioning", "Critique"),
+    ("PF-06", "Cluster Oracle 11g R2 (2 nœuds) — bases 3x — coûts licences", "Elevé"),
+    ("PF-07", "Sécurité insuffisante — JDBC direct front→BDD, pas d'API Gateway", "Elevé"),
+    ("PF-08", "Dette humaine — VM mascotte inconnue, Exchange legacy, dépendances Didier L.", "Elevé"),
+    ("PF-09", "Marque blanche — déploiement manuel chez le partenaire, pas de SaaS", "Modéré"),
 ]
 
 # Staircase: each step is indented further to the right and lower
@@ -772,12 +772,12 @@ set_slide_bg(slide)
 slide_header(slide, "6. Axes d'amélioration")
 
 axes = [
-    ("AXE-01", "Refonte architecture\nmodulaire", "PF-01, PF-02, PF-03"),
-    ("AXE-02", "Stocks temps réel\n(événementiel SAP)", "PF-03, PF-04"),
-    ("AXE-03", "Git + CI/CD", "PF-05, PF-08"),
-    ("AXE-04", "Migration cloud &\nrationalisation coûts", "PF-01, PF-06"),
-    ("AXE-05", "Sécurité &\nconformité RGPD", "PF-07"),
-    ("AXE-06", "Marque blanche\nSaaS multi-tenant", "PF-09"),
+    ("AXE-01", "WebLogic monolithique\n→ 9 modules Spring Boot 3", "PF-01, PF-02, PF-03"),
+    ("AXE-02", "Batch CSV + WCF perdu\n→ RabbitMQ StockUpdated", "PF-03, PF-04"),
+    ("AXE-03", "FTP codes sources\n→ Git + CI/CD", "PF-05, PF-08"),
+    ("AXE-04", "Oracle 11g R2 + on-premise\n→ PostgreSQL 16 + OVHcloud", "PF-01, PF-06"),
+    ("AXE-05", "JDBC direct + pas d'IAM\n→ API Gateway JWT + RGPD", "PF-07"),
+    ("AXE-06", "Déploiement manuel\n→ Module SaaS multi-tenant", "PF-09"),
 ]
 
 # Virtuous circle: 6 elements arranged in a circle

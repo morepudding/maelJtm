@@ -1,0 +1,310 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.5.3">
+  <diagram id="arch-v2-cible" name="BricoLoc 2.0 - Architecture Cible">
+    <mxGraphModel dx="2963" dy="1525" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="2200" math="0" shadow="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="titre" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontColor=#1a237e;" value="BricoLoc 2.0 — Architecture Cible (To-Be)" vertex="1">
+          <mxGeometry height="50" width="1100" x="400" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sous_titre" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontStyle=2;fontColor=#455a64;" value="Monolithe Modulaire (Spring Boot 3 / Java 21) · OVHcloud Managed Kubernetes · RabbitMQ · PostgreSQL 16" vertex="1">
+          <mxGeometry height="30" width="1100" x="400" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_clients" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#1565c0;startSize=40;fontStyle=1;fontSize=15;fontColor=#0d47a1;rounded=1;" value="🌐  UTILISATEURS &amp; CLIENTS" vertex="1">
+          <mxGeometry height="130" width="1220" x="30" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="c_web" parent="grp_clients" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;shadow=1;fontSize=13;fontStyle=1;" value="🖥️ Navigateurs Web&#xa;B2C · B2B · Admin" vertex="1">
+          <mxGeometry height="60" width="180" x="40" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c_mob" parent="grp_clients" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;shadow=1;fontSize=13;fontStyle=1;" value="📱 Application Mobile&#xa;iOS · Android (P2P)" vertex="1">
+          <mxGeometry height="60" width="180" x="270" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c_part" parent="grp_clients" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;shadow=1;fontSize=13;fontStyle=1;" value="🤝 Partenaires&#xa;Marque Blanche&#xa;(REST API v1)" vertex="1">
+          <mxGeometry height="60" width="180" x="500" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c_sal" parent="grp_clients" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;shadow=1;fontSize=13;fontStyle=1;" value="👔 Salariés BricoLoc&#xa;(SSO Azure AD)" vertex="1">
+          <mxGeometry height="60" width="180" x="730" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="c_dev" parent="grp_clients" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;shadow=1;fontSize=13;fontStyle=1;" value="👨‍💻 Développeurs / DSI&#xa;(Git + CI/CD)" vertex="1">
+          <mxGeometry height="60" width="200" x="960" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cdn" parent="1" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#7b1fa2;shadow=1;fontStyle=1;fontSize=13;fontColor=#4a148c;" value="☁️ CDN Global &amp; Edge Caching&#xa;(OVHcloud CDN · Assets statiques · TLS offloading)" vertex="1">
+          <mxGeometry height="100" width="420" x="400" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_ovh" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e8eaf6;strokeColor=#3949ab;startSize=40;fontStyle=1;fontSize=16;fontColor=#1a237e;rounded=1;strokeWidth=3;" value="🇫🇷  OVHcloud — Hébergement Souverain / Green IT (Score 4,50/5)" vertex="1">
+          <mxGeometry height="1250" width="1220" x="30" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_dmz" parent="grp_ovh" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#78909c;startSize=30;fontSize=14;fontStyle=1;dashed=1;" value="🛡️  Réseau Public / Périmètre Sécurité (DMZ)" vertex="1">
+          <mxGeometry height="140" width="1160" x="30" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="waf" parent="grp_dmz" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#c62828;shadow=1;fontSize=13;fontStyle=1;" value="🔥 Pare-Feu WAF&#xa;&amp; Anti-DDoS&#xa;(OVHcloud Anti-DDoS)" vertex="1">
+          <mxGeometry height="70" width="200" x="120" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="lb" parent="grp_dmz" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2f1;strokeColor=#00695c;shadow=1;fontSize=13;fontStyle=1;" value="⚖️ Load Balancer&#xa;(OVHcloud Managed LB)&#xa;Haute Disponibilité" vertex="1">
+          <mxGeometry height="70" width="200" x="840" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="gw_api" parent="grp_dmz" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;shadow=1;fontSize=13;fontStyle=1;fillColor=#c8e6c9;strokeColor=#1b5e20;" value="🔒 API Gateway&#xa;(Spring Cloud Gateway)&#xa;JWT · Rate Limit · TLS · Routing&#xa;Versioning /api/v1/ · /api/v2/" vertex="1">
+          <mxGeometry height="90" width="220" x="480" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_vrack" parent="grp_ovh" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9e9e9e;startSize=30;fontSize=14;fontStyle=1;" value="🔒  vRack — Réseau Privé Backend Isolé" vertex="1">
+          <mxGeometry height="980" width="1160" x="30" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_mks" parent="grp_vrack" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#546e7a;startSize=30;fontSize=13;fontStyle=1;" value="☸️  Zone Computing — Managed Kubernetes Service (MKS)" vertex="1">
+          <mxGeometry height="480" width="1120" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_mono" parent="grp_mks" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ede7f6;strokeColor=#4527a0;startSize=30;fontSize=13;fontStyle=1;dashed=1;fontColor=#311b92;strokeWidth=2;" value="⚙️  Monolithe Modulaire BricoLoc 2.0 — Spring Boot 3 / Java 21 (9 modules Maven)" vertex="1">
+          <mxGeometry height="410" width="820" x="280" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ms_cat" parent="grp_mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=12;fontColor=#311b92;shadow=1;" value="📦 Catalogue&#xa;━━━━━━━━&#xa;Outils · Catégories&#xa;Recherche full-text&#xa;Comparateur prix&#xa;Cache Redis" vertex="1">
+          <mxGeometry height="110" width="150" x="30" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ms_res" parent="grp_mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=12;fontColor=#311b92;shadow=1;" value="📅 Réservation&#xa;━━━━━━━━&#xa;Cycle de vie location&#xa;Calendrier dispo&#xa;Location P2P&#xa;Annulation" vertex="1">
+          <mxGeometry height="110" width="150" x="210" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ms_stk" parent="grp_mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=12;fontColor=#311b92;shadow=1;" value="📊 Stocks&#xa;━━━━━━━━&#xa;Source de vérité unique&#xa;Temps réel (SAP)&#xa;Inter-entrepôts&#xa;Gros outils" vertex="1">
+          <mxGeometry height="110" width="150" x="390" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ms_pay" parent="grp_mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=12;fontColor=#311b92;shadow=1;" value="💳 Paiement&#xa;━━━━━━━━&#xa;Stripe API v3&#xa;PCI-DSS&#xa;Transactions · Factures&#xa;Remboursements" vertex="1">
+          <mxGeometry height="110" width="150" x="570" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ms_usr" parent="grp_mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=12;fontColor=#311b92;shadow=1;" value="👥 Utilisateurs&#xa;━━━━━━━━&#xa;Auth JWT · RBAC&#xa;5 rôles métier&#xa;RGPD · Azure AD SSO&#xa;Remplacement autorisationDB" vertex="1">
+          <mxGeometry height="110" width="150" x="30" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ms_not" parent="grp_mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=12;fontColor=#311b92;shadow=1;" value="🔔 Notifications&#xa;━━━━━━━━&#xa;Emails transactionnels&#xa;Alertes logisticiens&#xa;Chat applicatif&#xa;Push mobile (futur)" vertex="1">
+          <mxGeometry height="110" width="150" x="210" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ms_adm" parent="grp_mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=12;fontColor=#311b92;shadow=1;" value="🛠️ Admin&#xa;━━━━━━━━&#xa;Back-office sécurisé&#xa;Gestion catalogue&#xa;Gestion stocks&#xa;Tableau de bord" vertex="1">
+          <mxGeometry height="110" width="150" x="390" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ms_mb" parent="grp_mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=12;fontColor=#311b92;shadow=1;" value="🏷️ Marque Blanche&#xa;━━━━━━━━&#xa;SaaS Multi-tenant&#xa;Isolation données&#xa;Personnalisation&#xa;APIs partenaire" vertex="1">
+          <mxGeometry height="110" width="150" x="570" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ms_int" parent="grp_mono" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=12;fontColor=#311b92;shadow=1;" value="🔗 Intégration&#xa;━━━━━━━━&#xa;Passerelle unique tiers&#xa;SAP · Prix · Power BI&#xa;Spring Batch&#xa;Connecteurs REST" vertex="1">
+          <mxGeometry height="50" width="220" x="300" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="cicd" parent="grp_mks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#f57f17;shadow=1;fontSize=12;fontStyle=1;" value="🚀 Pipeline CI/CD&#xa;(GitLab/GitHub + Docker)&#xa;Git centralisé · Tests auto" vertex="1">
+          <mxGeometry height="80" width="200" x="40" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="obs" parent="grp_mks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#f57f17;shadow=1;fontSize=12;" value="📡 Observabilité&#xa;(Spring Actuator · Logs · Métriques)&#xa;Alerting" vertex="1">
+          <mxGeometry height="70" width="200" x="40" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="strangler" parent="grp_mks" style="text;html=1;strokeColor=#e65100;fillColor=#fff3e0;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=11;fontStyle=2;fontColor=#e65100;" value="⚠️ Migration : Pattern Strangler Fig&#xa;(Remplacement progressif du SI legacy)" vertex="1">
+          <mxGeometry height="70" width="200" x="40" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="e_gw_mono" edge="1" parent="grp_mks" source="grp_mks" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#4527a0;fontStyle=1;fontSize=11;" target="grp_mono" value="Route authentifiée (JWT)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_mq" parent="grp_vrack" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fff3e0;strokeColor=#e65100;startSize=30;fontSize=13;fontStyle=1;fontColor=#bf360c;" value="📨  Bus Événementiel — RabbitMQ (AMQP)" vertex="1">
+          <mxGeometry height="130" width="1120" x="20" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="ev_stock" parent="grp_mq" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#e65100;fontSize=12;fontStyle=1;" value="StockUpdated" vertex="1">
+          <mxGeometry height="55" width="150" x="50" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ev_res" parent="grp_mq" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#e65100;fontSize=12;fontStyle=1;" value="ReservationCreated&#xa;Confirmed · Cancelled" vertex="1">
+          <mxGeometry height="60" width="180" x="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ev_pay" parent="grp_mq" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#e65100;fontSize=12;fontStyle=1;" value="PaymentValidated&#xa;PaymentFailed" vertex="1">
+          <mxGeometry height="60" width="160" x="470" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ev_price" parent="grp_mq" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#e65100;fontSize=12;fontStyle=1;" value="PriceUpdated" vertex="1">
+          <mxGeometry height="55" width="150" x="680" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ev_stocklow" parent="grp_mq" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#e65100;fontSize=12;fontStyle=1;" value="StockLow" vertex="1">
+          <mxGeometry height="55" width="150" x="880" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_data" parent="grp_vrack" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;startSize=30;fontSize=13;fontStyle=1;fontColor=#1b5e20;" value="💾  Zone Bases de Données &amp; Stockage" vertex="1">
+          <mxGeometry height="240" width="820" x="20" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="pg" parent="grp_data" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#c8e6c9;strokeColor=#1b5e20;shadow=1;fontSize=12;fontStyle=1;" value="🐘 PostgreSQL 16&#xa;━━━━━━━━&#xa;bricolocDB&#xa;1 schéma / module&#xa;Haute Disponibilité&#xa;(remplace Oracle 11g R2)" vertex="1">
+          <mxGeometry height="150" width="160" x="60" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="redis" parent="grp_data" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#c8e6c9;strokeColor=#1b5e20;shadow=1;fontSize=12;fontStyle=1;" value="⚡ Redis&#xa;━━━━━━━━&#xa;Cache catalogue&#xa;Sessions JWT&#xa;TTL configurable" vertex="1">
+          <mxGeometry height="150" width="160" x="290" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="grp_data" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#a5d6a7;strokeColor=#2e7d32;shadow=1;fontSize=12;fontStyle=1;" value="📁 S3 Object Storage&#xa;━━━━━━━━&#xa;Photos outils&#xa;Documents · Factures PDF&#xa;Médias BricoLoc" vertex="1">
+          <mxGeometry height="150" width="260" x="520" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_iam" parent="grp_vrack" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#2e7d32;startSize=30;fontSize=13;fontStyle=1;fontColor=#1b5e20;" value="🔐  Zone IAM &amp; Secrets" vertex="1">
+          <mxGeometry height="240" width="230" x="870" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="vault" parent="grp_iam" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b2dfdb;strokeColor=#00695c;shadow=1;fontSize=12;" value="🔑 Secrets Manager&#xa;(Vault / OVH KMS)&#xa;Certificats · Clés API&#xa;Variables d&#39;env." vertex="1">
+          <mxGeometry height="80" width="170" x="30" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="git_repo" parent="grp_iam" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b2dfdb;strokeColor=#00695c;shadow=1;fontSize=12;" value="📂 Git Repository&#xa;(Code source centralisé)&#xa;Fin du FTP sans Git" vertex="1">
+          <mxGeometry height="70" width="170" x="30" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="e_stk_ev" edge="1" parent="grp_vrack" source="ms_stk" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#e65100;fontStyle=1;fontSize=10;" target="ev_stock" value="Publie">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_res_ev" edge="1" parent="grp_vrack" source="ms_res" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#e65100;fontStyle=1;fontSize=10;" target="ev_res" value="Publie">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_pay_ev" edge="1" parent="grp_vrack" source="ms_pay" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#e65100;fontStyle=1;fontSize=10;" target="ev_pay" value="Publie">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_int_evprice" edge="1" parent="grp_vrack" source="ms_int" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#e65100;fontStyle=1;fontSize=10;" target="ev_price" value="Publie">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_stk_evlow" edge="1" parent="grp_vrack" source="ms_stk" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#e65100;fontStyle=1;fontSize=10;" target="ev_stocklow" value="Publie">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_evstock_cat" edge="1" parent="grp_vrack" source="ev_stock" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#e65100;dashed=1;fontStyle=2;fontSize=10;" target="ms_cat" value="Consomme">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_evres_pay" edge="1" parent="grp_vrack" source="ev_res" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#e65100;dashed=1;fontStyle=2;fontSize=10;" target="ms_pay" value="Consomme">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_evpay_res" edge="1" parent="grp_vrack" source="ev_pay" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#e65100;dashed=1;fontStyle=2;fontSize=10;" target="ms_res" value="Consomme">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_evprice_cat" edge="1" parent="grp_vrack" source="ev_price" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#e65100;dashed=1;fontStyle=2;fontSize=10;" target="ms_cat" value="Consomme">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_evlow_adm" edge="1" parent="grp_vrack" source="ev_stocklow" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#e65100;dashed=1;fontStyle=2;fontSize=10;" target="ms_adm" value="Consomme">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_evall_not" edge="1" parent="grp_vrack" source="ev_res" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#e65100;dashed=1;fontStyle=2;fontSize=10;" target="ms_not" value="Consomme">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_mono_pg" edge="1" parent="grp_vrack" source="ms_stk" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#2e7d32;fontStyle=1;fontSize=11;" target="pg" value="JDBC (1 schéma/module)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cat_redis" edge="1" parent="grp_vrack" source="ms_cat" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#2e7d32;fontStyle=1;fontSize=11;" target="redis" value="Cache TTL">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_adm_s3" edge="1" parent="grp_vrack" source="ms_adm" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#2e7d32;fontStyle=1;fontSize=11;" target="s3" value="API S3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_tiers" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#880e4f;startSize=40;fontStyle=1;fontSize=15;fontColor=#880e4f;rounded=1;" value="🏢  Siège &amp; Systèmes Tiers / SaaS" vertex="1">
+          <mxGeometry height="1250" width="280" x="1540" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="t_azuread" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#1565c0;shadow=1;fontSize=12;fontStyle=1;" value="🔷 Azure Active Directory&#xa;(SSO Salariés BricoLoc)&#xa;Fédération d&#39;identités" vertex="1">
+          <mxGeometry height="80" width="200" x="40" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="t_sap" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#1565c0;shadow=1;fontSize=12;fontStyle=1;" value="📋 SAP Business One&#xa;(ERP — Stocks &amp; Compta)&#xa;Intégré AD · Webhooks REST" vertex="1">
+          <mxGeometry height="80" width="200" x="40" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="t_exchange" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#9e9e9e;shadow=1;fontSize=12;" value="📧 Microsoft Exchange 2019&#xa;(Messagerie interne)&#xa;Win Server 2022" vertex="1">
+          <mxGeometry height="70" width="200" x="40" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="t_ad" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#9e9e9e;shadow=1;fontSize=12;" value="🖥️ Active Directory (AD)&#xa;Contrôleur de Domaine (Redondé)&#xa;Domaine Windows interne" vertex="1">
+          <mxGeometry height="70" width="200" x="40" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="t_stripe" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#880e4f;shadow=1;fontSize=12;fontStyle=1;" value="💳 Stripe&#xa;(Paiement en ligne)&#xa;API v3 + Webhooks&#xa;PCI-DSS Compliant" vertex="1">
+          <mxGeometry height="80" width="200" x="40" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="t_prix" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#880e4f;shadow=1;fontSize=12;fontStyle=1;" value="📊 Comparateur de Prix&#xa;(SaaS externe)&#xa;API REST" vertex="1">
+          <mxGeometry height="70" width="200" x="40" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="t_powerbi" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#880e4f;shadow=1;fontSize=12;fontStyle=1;" value="📈 Power BI Analytics&#xa;(Tableau de bord BI)&#xa;Pull via /api/v1/analytics" vertex="1">
+          <mxGeometry height="70" width="200" x="40" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="t_smtp" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#880e4f;shadow=1;fontSize=12;" value="📧 SMTP Cloud&#xa;(Mails transactionnels)&#xa;Azure Communication / SendGrid" vertex="1">
+          <mxGeometry height="70" width="200" x="40" y="930" as="geometry" />
+        </mxCell>
+        <mxCell id="t_entrepots" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#e65100;shadow=1;fontSize=12;strokeWidth=2;" value="🏭 Entrepôts (10 sites)&#xa;Interface web via API BricoLoc&#xa;(Remplace client lourd C# / WCF)&#xa;Connectés via VPN FAI" vertex="1">
+          <mxGeometry height="90" width="200" x="40" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="t_o365" parent="grp_tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;strokeColor=#9e9e9e;shadow=1;fontSize=12;" value="☁️ Office 365&#xa;(Bureautique salariés)" vertex="1">
+          <mxGeometry height="55" width="200" x="40" y="1185" as="geometry" />
+        </mxCell>
+        <mxCell id="e_web_cdn" edge="1" parent="1" source="c_web" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1565c0;fontStyle=1;fontSize=11;" target="cdn" value="HTTPS">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_mob_cdn" edge="1" parent="1" source="c_mob" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1565c0;fontStyle=1;fontSize=11;" target="cdn" value="HTTPS">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_part_gw" edge="1" parent="1" source="c_part" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1565c0;fontStyle=1;fontSize=11;" target="gw_api" value="REST API v1 (HTTPS)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sal_azuread" edge="1" parent="1" source="c_sal" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1565c0;dashed=1;fontStyle=2;fontSize=11;" target="t_azuread" value="SSO">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_dev_cicd" edge="1" parent="1" source="c_dev" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#f57f17;fontStyle=1;fontSize=11;" target="cicd" value="git push + CI/CD">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cdn_waf" edge="1" parent="1" source="cdn" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#c62828;" target="waf" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_waf_lb" edge="1" parent="1" source="waf" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#c62828;fontStyle=1;fontSize=11;" target="lb" value="Trafic filtré">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_lb_gw" edge="1" parent="1" source="lb" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#00695c;" target="gw_api" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_azuread_usr" edge="1" parent="1" source="t_azuread" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1565c0;dashed=1;fontStyle=2;fontSize=11;" target="ms_usr" value="OIDC / SSO">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1270" y="520" />
+              <mxPoint x="1270" y="1070" />
+              <mxPoint x="465" y="1070" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_sap_int" edge="1" parent="1" source="t_sap" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1565c0;fontStyle=1;fontSize=11;" target="ms_int" value="Webhook StockUpdated&#xa;(VPN IPsec)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_pay_stripe" edge="1" parent="1" source="ms_pay" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#880e4f;fontStyle=1;fontSize=11;" target="t_stripe" value="API v3 + Webhooks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_int_prix" edge="1" parent="1" source="ms_int" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#880e4f;fontStyle=1;fontSize=11;" target="t_prix" value="Extraction prix (REST)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_powerbi_int" edge="1" parent="1" source="t_powerbi" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#880e4f;fontStyle=1;fontSize=11;" target="ms_int" value="Pull /api/v1/analytics">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_not_smtp" edge="1" parent="1" source="ms_not" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#880e4f;fontStyle=1;fontSize=11;" target="t_smtp" value="SMTP">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_entrepots_gw" edge="1" parent="1" source="t_entrepots" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#e65100;fontStyle=1;fontSize=11;" target="gw_api" value="HTTPS (VPN FAI)&#xa;Interface web remplaçant&#xa;le client lourd C#">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_entrepots_sap" edge="1" parent="1" source="t_entrepots" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#9e9e9e;dashed=1;fontStyle=2;fontSize=11;" target="t_sap" value="Gestion stocks SAP">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_legende" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#9e9e9e;startSize=30;fontSize=13;fontStyle=1;" value="📌  Légende" vertex="1">
+          <mxGeometry height="160" width="820" x="30" y="1700" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" parent="grp_legende" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#bbdefb;strokeColor=#1565c0;fontSize=11;" value="⬜ Clients (Web, Mobile, Partenaires)" vertex="1">
+          <mxGeometry height="40" width="220" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2" parent="grp_legende" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1c4e9;strokeColor=#512da8;fontSize=11;" value="⬜ Monolithe Modulaire (9 modules Maven)" vertex="1">
+          <mxGeometry height="40" width="260" x="260" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3" parent="grp_legende" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#e65100;fontSize=11;" value="🟡 Événements RabbitMQ (async)" vertex="1">
+          <mxGeometry height="40" width="240" x="550" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4" parent="grp_legende" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#2e7d32;fontSize=11;" value="⬜ Données : PostgreSQL 16 · Redis · S3" vertex="1">
+          <mxGeometry height="40" width="260" x="20" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5" parent="grp_legende" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8bbd0;strokeColor=#880e4f;fontSize=11;" value="⬜ Systèmes Tiers &amp; SaaS" vertex="1">
+          <mxGeometry height="40" width="200" x="300" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="leg6" parent="grp_legende" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c5cae9;strokeColor=#3949ab;fontSize=11;" value="⬜ OVHcloud (Souveraineté FR/UE)" vertex="1">
+          <mxGeometry height="40" width="270" x="520" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_legacy" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffebee;strokeColor=#c62828;startSize=30;fontSize=13;fontStyle=1;fontColor=#b71c1c;rounded=1;" value="✅  Éléments Legacy SUPPRIMÉS / REMPLACÉS" vertex="1">
+          <mxGeometry height="160" width="710" x="860" y="1700" as="geometry" />
+        </mxCell>
+        <mxCell id="l1" parent="grp_legacy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=11;" value="❌ Oracle 11g R2 (surdimensionné)&#xa;→ ✅ PostgreSQL 16 (HA)" vertex="1">
+          <mxGeometry height="50" width="200" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="l2" parent="grp_legacy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=11;" value="❌ WebLogic / Java EE 6 (obsolète)&#xa;→ ✅ Spring Boot 3 / Java 21" vertex="1">
+          <mxGeometry height="50" width="200" x="240" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="l3" parent="grp_legacy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=11;" value="❌ WCF VB.NET (code perdu)&#xa;→ ✅ API REST (module Stocks)" vertex="1">
+          <mxGeometry height="50" width="200" x="460" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="l4" parent="grp_legacy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=11;" value="❌ FTP sans Git (Ubuntu 20.04)&#xa;→ ✅ Git + CI/CD Pipeline" vertex="1">
+          <mxGeometry height="45" width="200" x="20" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="l5" parent="grp_legacy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=11;" value="❌ Batch CSV quotidien (stocks)&#xa;→ ✅ RabbitMQ temps réel (SAP Webhooks)" vertex="1">
+          <mxGeometry height="45" width="200" x="240" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="l6" parent="grp_legacy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#c62828;fontSize=11;" value="❌ PL/SQL métier + accès BDD directs&#xa;→ ✅ Logique en Java (modules isolés)" vertex="1">
+          <mxGeometry height="45" width="200" x="460" y="105" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
