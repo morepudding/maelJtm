@@ -502,8 +502,8 @@ tech_choices = [
      "Gratuit, remplacement d'Oracle\nUtilisé par les plus grands acteurs\nCompatible avec le cloud", TAUPE),
     ("Messagerie", "RabbitMQ", "4,55/5",
      "Simple à mettre en place\nStocks mis à jour instantanément\nAdapté à la taille de BricoLoc", BLUSH),
-    ("Hébergement cloud", "Microsoft Azure", "4,75/5",
-     "Compatible avec nos outils existants\nOffice 365, Power BI, Active Directory\nBase de données gérée incluse", TERRACOTTA),
+    ("Hébergement cloud", "OVHcloud", "4,50/5",
+     "Souveraineté (100% européen)\nCoûts réseau prévisibles et gérés\nChampion du refroidissement Green IT", TERRACOTTA),
 ]
 for i, (decision, tech, score, justif, color) in enumerate(tech_choices):
     x = Inches(0.6 + (i % 2) * 6.2)
@@ -529,7 +529,91 @@ for i, (decision, tech, score, justif, color) in enumerate(tech_choices):
         justif, size=12, color=TEXT_MID)
 
 add_logo(slide)
-add_notes(slide, "Technologies choisies via matrice multicritères. Spring Boot car maîtrisé par l'équipe. PostgreSQL car gratuit et performant. RabbitMQ car simple à opérer. Azure car compatible Microsoft et cohérent avec nos compétences.")
+add_notes(slide, "Technologies choisies via matrice multicritères. Spring Boot car maîtrisé par l'équipe. PostgreSQL car gratuit et performant. RabbitMQ car simple à opérer. OVHcloud remporte l'hébergement pour sa souveraineté et maîtrise des coûts (détails sur la slide suivante).")
+
+# ═══════════════════════════════════════
+# SLIDE 12b : FOCUS CLOUD (Podium)
+# ═══════════════════════════════════════
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+set_slide_bg(slide)
+slide_header(slide, "9b. Focus : Le verdict de l'hébergeur Cloud", "Matrice basée sur 5 critères : Légal, Sécurité, Indépendance, Finance, Écologie")
+
+podium_w = Inches(3.2)
+podium_base_y = Inches(6.8)
+centers = [3.266, 6.666, 10.066]
+
+cloud_data = [
+    ("Scaleway", "4,40/5", "🥈 2ème", Inches(1.2), TAUPE, WHITE_BG, "server",
+     "✓ Français très solide\n✓ Souveraineté totale (RGPD)\n✓ Facturation claire", 
+     "Briques cloud avancées parfois\nmoins poussées"),
+    ("OVHcloud", "4,50/5", "🥇 1er", TERRACOTTA, WHITE_BG, "cloud",
+     "✓ Leader européen (100% RGPD)\n✓ Champion de l'écologie (Green IT)\n✓ Bande passante prévisible", 
+     "Moindre interopérabilité avec\nl'écosystème historique"),
+    ("Microsoft Azure", "4,10/5", "🥉 3ème", SAND_LIGHT, TEXT_DARK, "globe",
+     "✓ Intégration (Active Dir.)\n✓ Puissance technique\n✓ Outils clés en main", 
+     "Soumis au CLOUD Act américain\nCoûts difficiles à justifier")
+]
+
+animation_groups = []
+
+for i, (name, score, medal, p_height, bg_col, txt_col, icon, strengths, weakness) in enumerate(cloud_data):
+    cx = centers[i]
+    x_left = Inches(cx) - podium_w/2
+    y_top = podium_base_y - p_height
+    
+    group_shapes = []
+    
+    # 1. Podium block
+    border_col = BORDER if bg_col == SAND_LIGHT else bg_col
+    podium_rect = add_rect(slide, x_left, y_top, podium_w, p_height, bg_col, border_col)
+    group_shapes.append(podium_rect)
+    
+    # Medal text in podium
+    group_shapes.append(txt(slide, x_left, y_top + Inches(0.08), podium_w, Inches(0.4),
+        medal, size=18, color=txt_col, bold=True, align=PP_ALIGN.CENTER))
+    
+    # Score in podium
+    group_shapes.append(txt(slide, x_left, y_top + Inches(0.35), podium_w, Inches(0.4),
+        score, size=20, color=txt_col, bold=True, align=PP_ALIGN.CENTER))
+    
+    # 2. Detail Card hovering above
+    card_h = Inches(3.2)
+    card_y = y_top - card_h - Inches(0.15)
+    group_shapes.append(add_box(slide, x_left, card_y, podium_w, card_h, WHITE_BG, border_col, Pt(2)))
+    
+    # Title bar in card
+    group_shapes.append(add_rect(slide, x_left, card_y, podium_w, Inches(0.08), bg_col))
+    
+    # Cloud Name
+    group_shapes.append(txt(slide, x_left, card_y + Inches(0.15), podium_w, Inches(0.4),
+        name, size=16, color=TEXT_DARK, bold=True, align=PP_ALIGN.CENTER))
+        
+    # Icon
+    group_shapes.append(add_icon(slide, icon, x_left + podium_w/2 - Inches(0.2), card_y + Inches(0.55), Inches(0.4)))
+    
+    # Strengths (green/dark)
+    group_shapes.append(txt(slide, x_left + Inches(0.15), card_y + Inches(1.15), podium_w - Inches(0.3), Inches(0.9),
+        strengths, size=11, color=TEXT_DARK, align=PP_ALIGN.CENTER))
+        
+    # Divider
+    group_shapes.append(add_rect(slide, x_left + Inches(0.6), card_y + Inches(2.1), podium_w - Inches(1.2), Inches(0.01), SAND_LIGHT))
+    
+    # Weakness (reddish/mid)
+    group_shapes.append(txt(slide, x_left + Inches(0.15), card_y + Inches(2.3), podium_w - Inches(0.3), Inches(0.7),
+        weakness, size=10, color=TEXT_MID, align=PP_ALIGN.CENTER))
+        
+    animation_groups.append(group_shapes)
+
+# Other candidates note
+note_shapes = []
+note_shapes.append(txt(slide, Inches(0.5), Inches(7.0), Inches(11.0), Inches(0.3),
+    "Note : Google Cloud et AWS ont été écartés car soumis au CLOUD Act (imprévisibilité financière et juridique pour BricoLoc).",
+    size=10, color=TEXT_LIGHT, align=PP_ALIGN.CENTER))
+animation_groups.append(note_shapes)
+
+add_logo(slide)
+add_fade_on_click(slide, animation_groups)
+add_notes(slide, "Le choix s'est porté sur OVHcloud. Pourquoi ? Parce que l'intégration technologique ne fait pas tout : nous devons protéger légalement nos données (RGPD européen) et maîtriser notre budget avec certitude face au géants américains.")
 
 # ═══════════════════════════════════════
 # SLIDE DE TRANSITION : CONCEPTION
@@ -983,8 +1067,8 @@ sommaire_targets = [
     10,  # Comparaison
     11,  # Styles retenus
     12,  # Choix technologiques
-    14,  # Architecture logique (after transition slide)
-    17,  # Migration (after transition slides)
+    15,  # Architecture logique (after transition slide)
+    18,  # Migration (after transition slides)
 ]
 
 for i, target_idx in enumerate(sommaire_targets):
