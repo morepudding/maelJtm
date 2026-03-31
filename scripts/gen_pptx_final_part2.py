@@ -43,8 +43,8 @@ centers = [3.266, 6.666, 10.066]
 
 cloud_data = [
     ("Scaleway", "4,40/5", "🥈 2ème", Inches(1.2), TAUPE, WHITE_BG, "server", "✓ Français très solide\n✓ RGPD\n✓ Facturation claire", "Briques cloud avancées parfois moins poussées"),
-    ("OVHcloud", "4,50/5", "🥇 1er", TERRACOTTA, WHITE_BG, "cloud", "✓ Leader européen (100% RGPD)\n✓ Green IT (water-cooling)\n✓ Bande passante prévisible", "Moindre interopérabilité historique"),
-    ("Microsoft Azure", "4,10/5", "🥉 3ème", SAND_LIGHT, TEXT_DARK, "globe", "✓ Intégration (Active Dir.)\n✓ Puissance technique", "Soumis au CLOUD Act américain\nCoûts difficiles à justifier")
+    ("OVHcloud", "4,50/5", "🥇 1er", Inches(1.8), TERRACOTTA, WHITE_BG, "cloud", "✓ Leader européen (100% RGPD)\n✓ Green IT (water-cooling)\n✓ Bande passante prévisible", "Moindre interopérabilité historique"),
+    ("Microsoft Azure", "4,10/5", "🥉 3ème", Inches(0.8), SAND_LIGHT, TEXT_DARK, "globe", "✓ Intégration (Active Dir.)\n✓ Puissance technique", "Soumis au CLOUD Act américain\nCoûts difficiles à justifier")
 ]
 
 anim_groups = []
@@ -90,7 +90,7 @@ slide_header(slide, "6. Styles Architecturaux Retenus", "Pourquoi n'avons nous p
 # Rejected
 add_box(slide, Inches(0.8), Inches(1.3), Inches(11.5), Inches(0.9), SAND_LIGHT, BORDER, Pt(1))
 txt(slide, Inches(1.0), Inches(1.35), Inches(11), Inches(0.4), "Approches écartées", size=14, color=TERRACOTTA, bold=True)
-txt(slide, Inches(1.0), Inches(1.75), Inches(11), Inches(0.4), "Microservices (trop complexe pour 5 développeurs) · SOA/ESB (usne à gaz injustifiée) · N-tiers legacy", size=13, color=TEXT_MID)
+txt(slide, Inches(1.0), Inches(1.75), Inches(11), Inches(0.4), "Microservices (trop complexe pour 5 développeurs) · SOA/ESB (usine à gaz injustifiée) · N-tiers legacy", size=13, color=TEXT_MID)
 
 # Retained
 retained = [

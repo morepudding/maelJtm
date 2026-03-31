@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 from pptx import Presentation
 from pptx.util import Inches, Pt, Emu
 from pptx.dml.color import RGBColor
@@ -8,9 +8,9 @@ from pptx.oxml.ns import qn, nsmap
 from lxml import etree
 import os, math, random
 
-# ═══════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 # CONFIGURATION
-# ═══════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 prs = Presentation()
 prs.slide_width = Inches(13.333)
 prs.slide_height = Inches(7.5)
@@ -19,9 +19,9 @@ LOGO_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "image.png")
 ICON_DIR  = os.path.join(os.path.dirname(__file__), "..", "assets", "icons2")
 OUTPUT = os.path.join(os.path.dirname(__file__), "..", "07-presentation", "BricoLoc2_Presentation_Final.pptx")
 
-# ═══════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 # DESIGN SYSTEM
-# ═══════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 CREAM        = RGBColor(0xE5, 0xE7, 0xE6)
 SAND_LIGHT   = RGBColor(0xEE, 0xE6, 0xD8)
 BLUSH        = RGBColor(0xDA, 0xAB, 0x3A)
@@ -36,9 +36,9 @@ BORDER       = RGBColor(0xEE, 0xE6, 0xD8)
 
 FONT_NAME = "Inter"
 
-# ═══════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 # HELPERS
-# ═══════════════════════════════════════
+# â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 def set_slide_bg(slide, color=CREAM):
     fill = slide.background.fill
     fill.solid()
@@ -97,7 +97,15 @@ def add_circle(slide, left, top, size, fill_color):
     shape.shadow.inherit = False
     return shape
 
-def txt(slide, left, top, width, height, text, size=18, color=TEXT_DARK, bold=False, align=PP_ALIGN.LEFT):
+def add_chevron(slide, left, top, width, height, color):
+    shape = slide.shapes.add_shape(MSO_SHAPE.CHEVRON, left, top, width, height)
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = color
+    shape.line.fill.background()
+    shape.shadow.inherit = False
+    return shape
+
+def txt(slide, left, top, width, height, text, size=18, color=TEXT_DARK, bold=False, italic=False, align=PP_ALIGN.LEFT):
     txBox = slide.shapes.add_textbox(left, top, width, height)
     tf = txBox.text_frame
     tf.word_wrap = True
@@ -106,6 +114,7 @@ def txt(slide, left, top, width, height, text, size=18, color=TEXT_DARK, bold=Fa
     p.font.size = Pt(size)
     p.font.color.rgb = color
     p.font.bold = bold
+    p.font.italic = italic
     p.font.name = FONT_NAME
     p.alignment = align
     return txBox
@@ -228,23 +237,23 @@ add_rect(slide, Inches(0), Inches(0), Inches(13.333), Inches(0.06), TERRACOTTA)
 txt(slide, Inches(1), Inches(2.0), Inches(11.333), Inches(1.5), "BricoLoc 2.0", size=60, color=TEXT_DARK, bold=True, align=PP_ALIGN.CENTER)
 txt(slide, Inches(1), Inches(3.6), Inches(11.333), Inches(0.8), "Modernisation et Cloudification du SI", size=24, color=TEXT_MID, align=PP_ALIGN.CENTER)
 add_rect(slide, Inches(5.5), Inches(4.6), Inches(2.333), Inches(0.025), SAND_LIGHT)
-txt(slide, Inches(1), Inches(5.0), Inches(11.333), Inches(0.5), "Master 1 Architecte d'Application — CESI", size=16, color=TEXT_LIGHT, align=PP_ALIGN.CENTER)
-txt(slide, Inches(1), Inches(5.5), Inches(11.333), Inches(0.5), "Romain  ·  Maël  ·  Loris", size=18, color=TEXT_DARK, bold=True, align=PP_ALIGN.CENTER)
+txt(slide, Inches(1), Inches(5.0), Inches(11.333), Inches(0.5), "Master 1 Architecte d'Application â€” CESI", size=16, color=TEXT_LIGHT, align=PP_ALIGN.CENTER)
+txt(slide, Inches(1), Inches(5.5), Inches(11.333), Inches(0.5), "Romain  Â·  MaÃ«l  Â·  Loris", size=18, color=TEXT_DARK, bold=True, align=PP_ALIGN.CENTER)
 add_logo(slide)
-add_notes(slide, "Introduction de BricoLoc 2.0. Présentation de l'équipe et des enjeux de la migration Cloud.")
+add_notes(slide, "Introduction de BricoLoc 2.0. PrÃ©sentation de l'Ã©quipe et des enjeux de la migration Cloud.")
 
 # =====================================================================
 # SLIDE 2 : LE CONTEXTE BRICOLOC & DEFIS
 # =====================================================================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 set_slide_bg(slide)
-slide_header(slide, "1. Contexte BricoLoc & Défis")
-txt(slide, Inches(0.8), Inches(1.3), Inches(5), Inches(0.5), "BricoLoc — Location d'outils de bricolage", size=18, color=TEXT_DARK, bold=True)
+slide_header(slide, "1. Contexte BricoLoc & DÃ©fis")
+txt(slide, Inches(0.8), Inches(1.3), Inches(5), Inches(0.5), "BricoLoc â€” Location d'outils de bricolage", size=18, color=TEXT_DARK, bold=True)
 context_cards = [
-    ("Croissance freinée", "Perte de clients depuis 2020\nInsatisfaction liée aux bugs et stocks"),
-    ("Dette technique", "Monolithe Java EE 2013, Oracle on-prem\nBase de données surchargée"),
-    ("Internationalisation", "Expansion prévue en Europe (Bruxelles...)\nNécessite une forte scalabilité"),
-    ("Marque blanche", "Déploiements manuels chez le partenaire\nNécessité de basculer en SaaS"),
+    ("Croissance freinÃ©e", "Perte de clients depuis 2020\nInsatisfaction liÃ©e aux bugs et stocks"),
+    ("Dette technique", "Monolithe Java EE 2013, Oracle on-prem\nBase de donnÃ©es surchargÃ©e"),
+    ("Internationalisation", "Expansion prÃ©vue en Europe (Bruxelles...)\nNÃ©cessite une forte scalabilitÃ©"),
+    ("Marque blanche", "DÃ©ploiements manuels chez le partenaire\nNÃ©cessitÃ© de basculer en SaaS"),
 ]
 ctx_shades = [TERRACOTTA, TAUPE, SAND_LIGHT, BLUSH]
 ctx_icons = ["server", "database", "globe", "cloud"]
@@ -262,9 +271,9 @@ for i, (title, desc) in enumerate(context_cards):
 txt(slide, Inches(7), Inches(1.3), Inches(5.5), Inches(0.5), "Objectifs de la refonte", size=18, color=TERRACOTTA, bold=True)
 objectives = [
     ("Cloudification", "Migration vers une infrastructure Cloud moderne"),
-    ("Performance", "Amélioration des temps de réponse et scalabilité"),
-    ("Fiabilité", "Correction des anomalies de stocks en temps réel"),
-    ("Gouvernance", "Amélioration des processus de déploiement (CI/CD)"),
+    ("Performance", "AmÃ©lioration des temps de rÃ©ponse et scalabilitÃ©"),
+    ("FiabilitÃ©", "Correction des anomalies de stocks en temps rÃ©el"),
+    ("Gouvernance", "AmÃ©lioration des processus de dÃ©ploiement (CI/CD)"),
 ]
 for i, (verb, desc) in enumerate(objectives):
     y = Inches(1.95 + i * 1.0)
@@ -278,27 +287,27 @@ for i, (verb, desc) in enumerate(objectives):
     anim_groups.append(grp)
 add_logo(slide)
 add_fade_on_click(slide, anim_groups)
-add_notes(slide, "Le contexte de BricoLoc montre une dette technique accumulée depuis 2013, ralentissant l'expansion européenne.")
+add_notes(slide, "Le contexte de BricoLoc montre une dette technique accumulÃ©e depuis 2013, ralentissant l'expansion europÃ©enne.")
 
 # =====================================================================
 # SLIDE 3 : L'ARCHITECTURE EXISTANTE
 # =====================================================================
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 set_slide_bg(slide)
-slide_header(slide, "2. Architecture Existante : Un Monolithe Fortement Couplé")
+slide_header(slide, "2. Architecture Existante : Un Monolithe Fortement CouplÃ©")
 
-# Reproduction du schéma SI Existant via des placeholders propres
+# Reproduction du schÃ©ma SI Existant via des placeholders propres
 card_with_accent_top(slide, Inches(0.5), Inches(1.3), Inches(3.2), Inches(1.5), TERRACOTTA)
 txt(slide, Inches(0.7), Inches(1.4), Inches(2.8), Inches(0.4), "Front-end", size=16, color=TERRACOTTA, bold=True)
-txt(slide, Inches(0.7), Inches(1.8), Inches(2.8), Inches(0.9), "Tomcat 8.5 / Spring 5\nApache (reverse proxy)\nLogique métier migrée ici", size=11, color=TEXT_MID)
+txt(slide, Inches(0.7), Inches(1.8), Inches(2.8), Inches(0.9), "Tomcat 8.5 / Spring 5\nApache (reverse proxy)\nLogique mÃ©tier migrÃ©e ici", size=11, color=TEXT_MID)
 
 card_with_accent_top(slide, Inches(5.0), Inches(1.3), Inches(3.2), Inches(1.5), TAUPE)
 txt(slide, Inches(5.2), Inches(1.4), Inches(2.8), Inches(0.4), "Back-end", size=16, color=TAUPE, bold=True)
 txt(slide, Inches(5.2), Inches(1.8), Inches(2.8), Inches(0.9), "WebLogic 12c R1 / Java EE 6\nOracle Linux 6.5 (EOL)\nEJB / JPA legacy", size=11, color=TEXT_MID)
 
 card_with_accent_top(slide, Inches(2.5), Inches(3.7), Inches(4.0), Inches(1.5), SAND_LIGHT)
-txt(slide, Inches(2.7), Inches(3.8), Inches(3.6), Inches(0.4), "Oracle 11g R2 (Cluster 2 nœuds)", size=14, color=TEXT_DARK, bold=True)
-txt(slide, Inches(2.7), Inches(4.2), Inches(3.6), Inches(0.9), "bricolocDB · autorisationDB · prixDB\nTables > 150 colonnes, PL/SQL métier", size=11, color=TEXT_MID)
+txt(slide, Inches(2.7), Inches(3.8), Inches(3.6), Inches(0.4), "Oracle 11g R2 (Cluster 2 nÅ“uds)", size=14, color=TEXT_DARK, bold=True)
+txt(slide, Inches(2.7), Inches(4.2), Inches(3.6), Inches(0.9), "bricolocDB Â· autorisationDB Â· prixDB\nTables > 150 colonnes, PL/SQL mÃ©tier", size=11, color=TEXT_MID)
 
 card_with_accent_top(slide, Inches(9.5), Inches(1.3), Inches(3.5), Inches(1.5), TERRACOTTA)
 txt(slide, Inches(9.7), Inches(1.4), Inches(3.1), Inches(0.4), "Stocks & SAP", size=16, color=TERRACOTTA, bold=True)
@@ -306,7 +315,7 @@ txt(slide, Inches(9.7), Inches(1.8), Inches(3.1), Inches(0.9), "SAP B1 9.X > CSV
 
 add_box(slide, Inches(0.5), Inches(5.5), Inches(12.3), Inches(1.7), BLUSH, TERRACOTTA, Pt(1))
 txt(slide, Inches(0.7), Inches(5.55), Inches(11.5), Inches(0.4), "Points Douloureux Majeurs", size=16, color=TERRACOTTA, bold=True)
-txt(slide, Inches(1.0), Inches(5.95), Inches(11.5), Inches(1.2), "• Accès JDBC direct du front vers la BDD (contourne le back-end)\n• Logique métier éparpillée (Front, Back, et BDD PL/SQL)\n• Batch CSV quotidien : décalage temps réel des stocks (24h de latence)\n• Absence de CI/CD (codes sources sur FTP, aucun Git)", size=12, color=TEXT_MID)
+txt(slide, Inches(1.0), Inches(5.95), Inches(11.5), Inches(1.2), "â€¢ AccÃ¨s JDBC direct du front vers la BDD (contourne le back-end)\nâ€¢ Logique mÃ©tier Ã©parpillÃ©e (Front, Back, et BDD PL/SQL)\nâ€¢ Batch CSV quotidien : dÃ©calage temps rÃ©el des stocks (24h de latence)\nâ€¢ Absence de CI/CD (codes sources sur FTP, aucun Git)", size=12, color=TEXT_MID)
 
 # Place image if available
 drawio_existant_png = os.path.join(os.path.dirname(__file__), "..", "02-contexte", "contexte_bricoloc_2.png")
@@ -315,7 +324,7 @@ if os.path.exists(drawio_existant_png):
     slide.shapes.add_picture(drawio_existant_png, Inches(1), Inches(1.5), Inches(11.3), Inches(5))
 
 add_logo(slide)
-add_notes(slide, "Le SI de 2013 est une 'grande boule de boue'. Les stocks sont désynchronisés à cause d'un batch CSV quotidien.")
+add_notes(slide, "Le SI de 2013 est une 'grande boule de boue'. Les stocks sont dÃ©synchronisÃ©s Ã  cause d'un batch CSV quotidien.")
 
 # =====================================================================
 # SLIDE 4 : DIAGNOSTIC & ENF
@@ -326,18 +335,18 @@ slide_header(slide, "3. Exigences Non Fonctionnelles (ENF)", "De l'analyse des f
 
 enf_data = [
     ("ENF-01", "Performance", "Catalogue < 2s, APIs < 500ms, pics x3", 5),
-    ("ENF-02", "Disponibilité", "SLA >= 99,5 %, RTO < 4h, RPO < 1h", 5),
-    ("ENF-04", "Sécurité", "IAM centralisé, RGPD, PCI-DSS", 5),
-    ("ENF-05", "Maintenabilité", "Tests >= 70 %, zéro PL/SQL, OpenAPI", 5),
-    ("ENF-03", "Scalabilité", "Scale-out, expansion EU, B2C/B2B", 4),
-    ("ENF-06", "Interopérabilité", "REST SAP, Stripe v3, Power BI", 4),
+    ("ENF-02", "DisponibilitÃ©", "SLA >= 99,5 %, RTO < 4h, RPO < 1h", 5),
+    ("ENF-04", "SÃ©curitÃ©", "IAM centralisÃ©, RGPD, PCI-DSS", 5),
+    ("ENF-05", "MaintenabilitÃ©", "Tests >= 70 %, zÃ©ro PL/SQL, OpenAPI", 5),
+    ("ENF-03", "ScalabilitÃ©", "Scale-out, expansion EU, B2C/B2B", 4),
+    ("ENF-06", "InteropÃ©rabilitÃ©", "REST SAP, Stripe v3, Power BI", 4),
 ]
 
 add_rect(slide, Inches(0.8), Inches(1.3), Inches(11.5), Inches(0.5), SAND_LIGHT)
 txt(slide, Inches(1.0), Inches(1.33), Inches(1.2), Inches(0.4), "ID", size=11, color=TEXT_LIGHT, bold=True)
 txt(slide, Inches(2.2), Inches(1.33), Inches(2), Inches(0.4), "Exigence", size=11, color=TEXT_LIGHT, bold=True)
-txt(slide, Inches(4.5), Inches(1.33), Inches(5), Inches(0.4), "Critères clés", size=11, color=TEXT_LIGHT, bold=True)
-txt(slide, Inches(10.0), Inches(1.33), Inches(2), Inches(0.4), "Priorité", size=11, color=TEXT_LIGHT, bold=True, align=PP_ALIGN.RIGHT)
+txt(slide, Inches(4.5), Inches(1.33), Inches(5), Inches(0.4), "CritÃ¨res clÃ©s", size=11, color=TEXT_LIGHT, bold=True)
+txt(slide, Inches(10.0), Inches(1.33), Inches(2), Inches(0.4), "PrioritÃ©", size=11, color=TEXT_LIGHT, bold=True, align=PP_ALIGN.RIGHT)
 
 anim_groups = []
 for i, (eid, name, desc, level) in enumerate(enf_data):
@@ -365,6 +374,9 @@ for i, (eid, name, desc, level) in enumerate(enf_data):
 
 add_logo(slide)
 add_fade_on_click(slide, anim_groups)
-add_notes(slide, "Pour répondre à ces problématiques, nous posons 6 ENF critiques : performance, dispo, sécurité, maintenabilité.")
+add_notes(slide, "Pour rÃ©pondre Ã  ces problÃ©matiques, nous posons 6 ENF critiques : performance, dispo, sÃ©curitÃ©, maintenabilitÃ©.")
 
 # Append next slides later
+
+
+
