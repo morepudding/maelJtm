@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BricoLoc 2.0 — Annexes de la Présentation</title>
+<style>
+  /* ══════════════════════════════════════════════════════════════
+     BRICOLOC 2.0 — DESIGN SYSTEM
+     Palette : Crème / Sable / Cuivré / Terracotta
+     ══════════════════════════════════════════════════════════════ */
+  :root {
+    --cream:       #E5E7E6;
+    --sand:        #EEE6D8;
+    --sand-light:  #F7F3ED;
+    --blush:       #DAAB3A;
+    --taupe:       #B67332;
+    --terracotta:  #93441A;
+    --terracotta-d:#6E2E0F;
+    --text-dark:   #2E2822;
+    --text-mid:    #5C5044;
+    --text-light:  #82786E;
+    --white:       #FFFFFF;
+    --border:      #E0D8CC;
+    --bg-page:     #FDFBF8;
+    --shadow:      0 2px 12px rgba(46,40,34,.06);
+    --radius:      6px;
+  }
+
+  @page {
+    size: A4;
+    margin: 18mm 16mm 20mm 16mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    color: var(--text-dark);
+    background: var(--bg-page);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── PAGE WRAPPER ─────────────────────────────────────────── */
+  .page {
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 40px 48px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    page-break-after: always;
+    break-after: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    position: relative;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  /* filigrane subtil */
+  .page::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(218,171,58,.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ── COVER PAGE ───────────────────────────────────────────── */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    text-align: center;
+    padding: 60px 48px;
+  }
+  .cover .logo-mark {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--terracotta) 0%, var(--taupe) 50%, var(--blush) 100%);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 32px rgba(147,68,26,.18);
+  }
+  .cover .logo-mark span {
+    font-size: 28pt;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -1px;
+  }
+  .cover h1 {
+    font-size: 28pt;
+    font-weight: 300;
+    color: var(--terracotta);
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .cover h1 strong {
+    font-weight: 700;
+  }
+  .cover .subtitle {
+    font-size: 13pt;
+    color: var(--text-mid);
+    font-weight: 400;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .cover .divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--blush), var(--terracotta));
+    border-radius: 2px;
+    margin: 0 auto 40px;
+  }
+  .cover .meta {
+    font-size: 10pt;
+    color: var(--text-light);
+    line-height: 2;
+  }
+  .cover .meta strong { color: var(--text-mid); font-weight: 600; }
+  .cover .badge {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 8px 24px;
+    border: 1.5px solid var(--border);
+    border-radius: 100px;
+    font-size: 8.5pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+
+  /* ── TABLE OF CONTENTS ────────────────────────────────────── */
+  .toc { padding-top: 48px; }
+  .toc h2 {
+    font-size: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--terracotta);
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+  .toc-list { list-style: none; }
+  .toc-list li {
+    display: flex;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--sand);
+  }
+  .toc-num {
+    font-size: 22pt;
+    font-weight: 200;
+    color: var(--blush);
+    min-width: 48px;
+    line-height: 1;
+  }
+  .toc-content { flex: 1; }
+  .toc-title {
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+  .toc-ref {
+    font-size: 8.5pt;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  /* ── SECTION HEADERS ──────────────────────────────────────── */
+  .section-header {
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--sand);
+    position: relative;
+  }
+  .section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 48px; height: 2px;
+    background: var(--terracotta);
+  }
+  .section-num {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--blush);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .section-header h2 {
+    font-size: 16pt;
+    font-weight: 300;
+    color: var(--terracotta);
+    letter-spacing: -0.3px;
+  }
+  .section-header h2 strong { font-weight: 700; }
+  .section-ref {
+    font-size: 8.5pt;
+    color: var(--text-light);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ── TABLES ───────────────────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 9.5pt;
+  }
+  thead th {
+    background: var(--terracotta);
+    color: var(--white);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  thead th:first-child { border-radius: var(--radius) 0 0 0; }
+  thead th:last-child  { border-radius: 0 var(--radius) 0 0; }
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--sand);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) td { background: var(--sand-light); }
+  tbody tr:hover td { background: #F5EFE4; }
+  td.center, th.center { text-align: center; }
+  .score-cell { font-weight: 700; font-size: 10pt; }
+  .score-high { color: var(--terracotta); }
+  .score-mid  { color: var(--taupe); }
+  .score-low  { color: var(--text-light); }
+
+  /* badges inline */
+  .badge-ok {
+    display: inline-block;
+    background: #E8F5E9; color: #2E7D32;
+    padding: 2px 10px; border-radius: 100px;
+    font-size: 8pt; font-weight: 700;
+  }
+  .badge-no {
+    display: inline-block;
+    background: #FAFAFA; color: #999;
+    padding: 2px 10px; border-radius: 100px;
+    font-size: 8pt; font-weight: 600;
+  }
+  .badge-crit {
+    display: inline-block;
+    padding: 2px 10px; border-radius: 100px;
+    font-size: 7.5pt; font-weight: 700;
+  }
+  .crit-red    { background: #FFEBEE; color: #C62828; }
+  .crit-orange { background: #FFF3E0; color: #E65100; }
+  .crit-yellow { background: #FFFDE7; color: #F57F17; }
+
+  .check { color: var(--terracotta); font-weight: 700; }
+
+  /* ── VERDICT BOX ──────────────────────────────────────────── */
+  .verdict-box {
+    background: linear-gradient(135deg, var(--sand-light) 0%, var(--sand) 100%);
+    border-left: 4px solid var(--terracotta);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 20px;
+    margin: 20px 0 24px;
+  }
+  .verdict-box .verdict-title {
+    font-size: 10pt;
+    font-weight: 700;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  /* ── LEXIQUE ──────────────────────────────────────────────── */
+  .lex-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .lex-item {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--sand);
+    font-size: 9pt;
+  }
+  .lex-item:nth-child(4n+3), .lex-item:nth-child(4n+4) {
+    background: var(--sand-light);
+  }
+  .lex-term {
+    font-weight: 700;
+    color: var(--terracotta);
+    font-size: 9pt;
+  }
+  .lex-def {
+    color: var(--text-mid);
+    margin-top: 1px;
+    line-height: 1.4;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────────────── */
+  .page-footer {
+    position: absolute;
+    bottom: 20px; left: 48px; right: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7.5pt;
+    color: var(--text-light);
+    border-top: 1px solid var(--sand);
+    padding-top: 8px;
+  }
+  .page-footer .bar {
+    width: 24px; height: 2px;
+    background: linear-gradient(90deg, var(--blush), var(--terracotta));
+    border-radius: 1px;
+  }
+
+  /* ── PRINT ────────────────────────────────────────────────── */
+  @media print {
+    body { background: white; margin: 0; padding: 0; }
+    .page {
+      box-shadow: none;
+      padding: 0;
+      max-width: none;
+      margin: 0;
+      page-break-after: always;
+      page-break-inside: avoid;
+      break-after: page;
+      break-inside: avoid;
+      position: relative;
+      overflow: visible;
+    }
+    .page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+
+    /* ── Cover = pleine page A4 ── */
+    .cover {
+      height: 100vh;
+      min-height: 100vh;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Anti-coupure sections ── */
+    .section-header {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    h3 {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    table {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    thead {
+      display: table-header-group;
+    }
+    tr {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .verdict-box {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .criteria-note {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    /* ── Footer en bas de chaque page imprimée ── */
+    .page-footer {
+      position: fixed;
+      bottom: 0;
+      left: 16mm;
+      right: 16mm;
+    }
+
+    .no-print { display: none; }
+  }
+
+  /* ── COVERAGE GRID (traçabilité) ──────────────────────────── */
+  .coverage-table td {
+    text-align: center;
+    font-size: 12pt;
+    padding: 6px 8px;
+  }
+  .coverage-table .check-mark {
+    color: var(--terracotta);
+    font-weight: 700;
+  }
+
+  /* ── SUB TITLES ───────────────────────────────────────────── */
+  h3 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--taupe);
+    margin: 20px 0 10px;
+    padding-left: 12px;
+    border-left: 3px solid var(--blush);
+  }
+
+  .criteria-note {
+    font-size: 8.5pt;
+    color: var(--text-light);
+    font-style: italic;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    background: var(--sand-light);
+    border-radius: var(--radius);
+  }
+
+  /* medal icons */
+  .medal { font-size: 11pt; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 1 — COVER
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page cover">
+  <div class="logo-mark"><span>B</span></div>
+  <h1><strong>BricoLoc</strong> 2.0</h1>
+  <p class="subtitle">Annexes du dossier de conception</p>
+  <div class="divider"></div>
+  <p class="meta">
+    <strong>Master 1 Architecte d'Application</strong> — CESI<br>
+    Romain &nbsp;·&nbsp; Maël &nbsp;·&nbsp; Loris
+  </p>
+  <span class="badge">Document confidentiel</span>
+
+  <div class="page-footer">
+    <span>BricoLoc 2.0 — Annexes</span>
+    <span class="bar"></span>
+    <span>Mars 2026</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 2 — TABLE DES ANNEXES
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page toc">
+  <h2>Table des annexes</h2>
+  <ul class="toc-list">
+    <li>
+      <span class="toc-num">01</span>
+      <div class="toc-content">
+        <div class="toc-title">Grille de comparaison des styles architecturaux</div>
+        <div class="toc-ref">Référence : slide 11</div>
+      </div>
+    </li>
+    <li>
+      <span class="toc-num">02</span>
+      <div class="toc-content">
+        <div class="toc-title">Choix technologiques — Scores et verdicts</div>
+        <div class="toc-ref">Référence : slide 13</div>
+      </div>
+    </li>
+    <li>
+      <span class="toc-num">03</span>
+      <div class="toc-content">
+        <div class="toc-title">Choix Cloud — Scores et verdict</div>
+        <div class="toc-ref">Référence : slide 14</div>
+      </div>
+    </li>
+    <li>
+      <span class="toc-num">04</span>
+      <div class="toc-content">
+        <div class="toc-title">Matrice de traçabilité PF → AXE → ENF</div>
+        <div class="toc-ref">Référence : slides 8, 9, 10</div>
+      </div>
+    </li>
+    <li>
+      <span class="toc-num">05</span>
+      <div class="toc-content">
+        <div class="toc-title">Lexique des termes techniques</div>
+        <div class="toc-ref">Référence : toutes les slides</div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="page-footer">
+    <span>BricoLoc 2.0 — Annexes</span>
+    <span class="bar"></span>
+    <span>Table des annexes</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 3 — ANNEXE 1 : STYLES ARCHITECTURAUX
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <span class="section-num">Annexe 01</span>
+    <h2>Grille de comparaison des <strong>styles architecturaux</strong></h2>
+    <p class="section-ref">Référence : slide 11 — Évaluation de 1 (mauvais) à 5 (excellent)</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ENF / Contrainte</th>
+        <th class="center">Monolithe modulaire</th>
+        <th class="center">N-tiers (actuel)</th>
+        <th class="center">SOA / ESB</th>
+        <th class="center">Microservices</th>
+        <th class="center">Événementiel</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>ENF-01 Performance</td><td class="center">3</td><td class="center">2</td><td class="center">3</td><td class="center score-cell score-high">5</td><td class="center">4</td></tr>
+      <tr><td>ENF-02 Disponibilité & Résilience</td><td class="center">3</td><td class="center">1</td><td class="center">3</td><td class="center score-cell score-high">5</td><td class="center score-cell score-high">5</td></tr>
+      <tr><td>ENF-03 Scalabilité</td><td class="center">2</td><td class="center">1</td><td class="center">3</td><td class="center score-cell score-high">5</td><td class="center">4</td></tr>
+      <tr><td>ENF-04 Sécurité</td><td class="center">3</td><td class="center">2</td><td class="center">3</td><td class="center">4</td><td class="center">3</td></tr>
+      <tr><td>ENF-05 Maintenabilité</td><td class="center">4</td><td class="center">1</td><td class="center">3</td><td class="center">3</td><td class="center">3</td></tr>
+      <tr><td>ENF-06 Interopérabilité</td><td class="center">3</td><td class="center">2</td><td class="center score-cell score-high">5</td><td class="center">4</td><td class="center">4</td></tr>
+      <tr><td>ENF-07 Portabilité / Cloud</td><td class="center">4</td><td class="center">2</td><td class="center">3</td><td class="center score-cell score-high">5</td><td class="center">4</td></tr>
+      <tr><td>ENF-08 Observabilité</td><td class="center">3</td><td class="center">2</td><td class="center">3</td><td class="center">4</td><td class="center">3</td></tr>
+      <tr><td>Faisabilité équipe 5 devs</td><td class="center score-cell score-high">5</td><td class="center">5</td><td class="center">2</td><td class="center score-cell score-low">1</td><td class="center">3</td></tr>
+      <tr><td>Migration progressive</td><td class="center score-cell score-high">5</td><td class="center">—</td><td class="center">3</td><td class="center">2</td><td class="center">4</td></tr>
+      <tr><td>Délai de valeur</td><td class="center score-cell score-high">5</td><td class="center">5</td><td class="center">2</td><td class="center score-cell score-low">1</td><td class="center">3</td></tr>
+      <tr style="font-weight:700; background:var(--sand);">
+        <td>TOTAL / 55</td>
+        <td class="center score-cell score-high">40</td>
+        <td class="center score-cell score-low">23</td>
+        <td class="center score-cell score-mid">33</td>
+        <td class="center score-cell score-mid">39</td>
+        <td class="center score-cell score-high">40</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="verdict-box">
+    <div class="verdict-title">Verdict — Architecture hybride retenue</div>
+    <table style="margin:0;">
+      <thead>
+        <tr><th>Composant</th><th>Style retenu</th><th>Justification</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Application core</td><td><strong>Monolithe modulaire</strong></td><td>Faisable par 5 devs, migration progressive, ACID natif</td></tr>
+        <tr><td>Synchronisation stocks</td><td><strong>Événementiel (RabbitMQ)</strong></td><td>Remplace le batch CSV, temps réel</td></tr>
+        <tr><td>Intégrations (SAP, Stripe)</td><td><strong>APIs REST</strong></td><td>Interopérabilité sans complexité ESB</td></tr>
+        <tr><td>Marque blanche</td><td><strong>Multi-tenant</strong></td><td>SaaS sans surcharge initiale</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-footer">
+    <span>BricoLoc 2.0 — Annexes</span>
+    <span class="bar"></span>
+    <span>Annexe 01 — Styles architecturaux</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 4 — ANNEXE 2 : CHOIX TECHNOLOGIQUES
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <span class="section-num">Annexe 02</span>
+    <h2>Choix technologiques — <strong>Scores et verdicts</strong></h2>
+    <p class="section-ref">Référence : slide 13</p>
+  </div>
+
+  <p class="criteria-note">
+    Critères pondérés : Maturité (15%) · Maîtrise équipe (20%) · Compatibilité (15%) · Performance (10%) · TCO (15%) · Cloud (10%) · Maintenabilité (10%) · Support (5%)
+  </p>
+
+  <h3>Framework back-end</h3>
+  <table>
+    <thead><tr><th>Technologie</th><th class="center">Score /5</th><th class="center">Décision</th><th>Justification</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Spring Boot 3</strong></td><td class="center score-cell score-high">4,90</td><td class="center"><span class="badge-ok">✓ RETENU</span></td><td>Maîtrisé par l'équipe (Spring 5 → 3). Open-source, cloud-ready, migration incrémentale</td></tr>
+      <tr><td>Quarkus</td><td class="center score-cell score-mid">4,15</td><td class="center"><span class="badge-no">—</span></td><td>Courbe d'apprentissage trop élevée pour l'équipe</td></tr>
+      <tr><td>Jakarta EE 10</td><td class="center score-cell score-low">3,95</td><td class="center"><span class="badge-no">—</span></td><td>Coût licence serveur d'application, maintenabilité inférieure</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Base de données</h3>
+  <table>
+    <thead><tr><th>Technologie</th><th class="center">Score /5</th><th class="center">Décision</th><th>Justification</th></tr></thead>
+    <tbody>
+      <tr><td><strong>PostgreSQL 16</strong></td><td class="center score-cell score-high">4,60</td><td class="center"><span class="badge-ok">✓ RETENU</span></td><td>Open-source, PL/pgSQL pour migration Oracle, supporté par tous les clouds</td></tr>
+      <tr><td>MySQL 8</td><td class="center score-cell score-mid">4,25</td><td class="center"><span class="badge-no">—</span></td><td>Moins de fonctionnalités avancées</td></tr>
+      <tr><td>Oracle 19c Cloud</td><td class="center score-cell score-low">3,85</td><td class="center"><span class="badge-no">—</span></td><td>Surcoût de licences prohibitif (PF-06)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Bus de messages</h3>
+  <table>
+    <thead><tr><th>Technologie</th><th class="center">Score /5</th><th class="center">Décision</th><th>Justification</th></tr></thead>
+    <tbody>
+      <tr><td><strong>RabbitMQ</strong></td><td class="center score-cell score-high">4,55</td><td class="center"><span class="badge-ok">✓ RETENU</span></td><td>Simple pour 5 devs, Spring AMQP natif, adapté aux volumes BricoLoc</td></tr>
+      <tr><td>Apache Kafka</td><td class="center score-cell score-mid">4,20</td><td class="center"><span class="badge-no">—</span></td><td>Trop complexe et disproportionné pour 10 entrepôts</td></tr>
+      <tr><td>ActiveMQ</td><td class="center score-cell score-low">3,60</td><td class="center"><span class="badge-no">—</span></td><td>Écosystème moins dynamique, cloud-readiness faible</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <span>BricoLoc 2.0 — Annexes</span>
+    <span class="bar"></span>
+    <span>Annexe 02 — Choix technologiques</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 5 — ANNEXE 3 : CHOIX CLOUD
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <span class="section-num">Annexe 03</span>
+    <h2>Choix Cloud — <strong>Scores et verdict</strong></h2>
+    <p class="section-ref">Référence : slide 14</p>
+  </div>
+
+  <p class="criteria-note">
+    Critères pondérés : Légal & Souveraineté (20%) · Sécurité & Confiance (25%) · Indépendance technique (25%) · Maîtrise financière (20%) · Écologie / Green IT (10%)
+  </p>
+
+  <table>
+    <thead>
+      <tr><th class="center">#</th><th>Fournisseur</th><th class="center">Score /5</th><th>Forces</th><th>Faiblesses</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="center"><span class="medal">🥇</span></td>
+        <td><strong>OVHcloud</strong></td>
+        <td class="center score-cell score-high">4,50</td>
+        <td>100 % RGPD, champion Green IT, bande passante prévisible</td>
+        <td>Moindre interopérabilité écosystème Microsoft</td>
+      </tr>
+      <tr>
+        <td class="center"><span class="medal">🥈</span></td>
+        <td>Scaleway</td>
+        <td class="center score-cell score-mid">4,40</td>
+        <td>Souveraineté totale, facturation claire</td>
+        <td>Briques avancées moins poussées</td>
+      </tr>
+      <tr>
+        <td class="center"><span class="medal">🥉</span></td>
+        <td>Microsoft Azure</td>
+        <td class="center score-cell score-mid">4,10</td>
+        <td>Intégration AD / Office 365 / Power BI native</td>
+        <td>Soumis au CLOUD Act, coûts moins prévisibles</td>
+      </tr>
+      <tr>
+        <td class="center">4</td>
+        <td>Google Cloud</td>
+        <td class="center score-cell score-low">3,60</td>
+        <td>Puissance technique</td>
+        <td>CLOUD Act + coûts imprévisibles</td>
+      </tr>
+      <tr>
+        <td class="center">5</td>
+        <td>AWS</td>
+        <td class="center score-cell score-low">3,35</td>
+        <td>Catalogue de services le plus large</td>
+        <td>CLOUD Act, nécessite spécialiste FinOps dédié</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="verdict-box">
+    <div class="verdict-title">Verdict — OVHcloud retenu</div>
+    <p style="font-size:9.5pt; color:var(--text-mid); line-height:1.6;">
+      L'intégration technologique ne fait pas tout : nous devons protéger légalement nos données (RGPD européen) et maîtriser notre budget avec certitude.
+      Google Cloud et AWS ont été écartés car soumis au CLOUD Act — imprévisibilité financière et juridique pour une PME comme BricoLoc.
+    </p>
+  </div>
+
+  <div class="page-footer">
+    <span>BricoLoc 2.0 — Annexes</span>
+    <span class="bar"></span>
+    <span>Annexe 03 — Choix Cloud</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE 6 — ANNEXE 4 : TRAÇABILITÉ
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <span class="section-num">Annexe 04</span>
+    <h2>Matrice de traçabilité <strong>PF → AXE → ENF</strong></h2>
+    <p class="section-ref">Référence : slides 8, 9, 10 — Cohérence de la démarche de conception</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Point Faible</th><th class="center">Criticité</th><th>Axe(s) d'amélioration</th><th>ENF adressées</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>PF-01</strong> Monolithe obsolète</td><td class="center"><span class="badge-crit crit-red">CRITIQUE</span></td><td>AXE-01 Architecture modulaire · AXE-04 Migration cloud</td><td>ENF-01, 02, 05, 07</td></tr>
+      <tr><td><strong>PF-02</strong> Logique éparpillée</td><td class="center"><span class="badge-crit crit-red">CRITIQUE</span></td><td>AXE-01 Architecture modulaire</td><td>ENF-05, 04</td></tr>
+      <tr><td><strong>PF-03</strong> Stocks incohérents</td><td class="center"><span class="badge-crit crit-red">CRITIQUE</span></td><td>AXE-01 · AXE-02 Stocks temps réel</td><td>ENF-01, 02</td></tr>
+      <tr><td><strong>PF-04</strong> WCF code perdu (SPOF)</td><td class="center"><span class="badge-crit crit-red">CRITIQUE</span></td><td>AXE-02 Stocks temps réel</td><td>ENF-02, 05</td></tr>
+      <tr><td><strong>PF-05</strong> Pas de Git (FTP)</td><td class="center"><span class="badge-crit crit-red">CRITIQUE</span></td><td>AXE-03 Git + CI/CD</td><td>ENF-05, 07</td></tr>
+      <tr><td><strong>PF-06</strong> Oracle surcoût</td><td class="center"><span class="badge-crit crit-orange">ÉLEVÉ</span></td><td>AXE-04 Migration cloud (PostgreSQL)</td><td>ENF-01, 05</td></tr>
+      <tr><td><strong>PF-07</strong> Sécurité insuffisante</td><td class="center"><span class="badge-crit crit-orange">ÉLEVÉ</span></td><td>AXE-05 Sécurité & RGPD</td><td>ENF-04</td></tr>
+      <tr><td><strong>PF-08</strong> Dette humaine</td><td class="center"><span class="badge-crit crit-orange">ÉLEVÉ</span></td><td>AXE-03 Git + CI/CD</td><td>ENF-05, 08</td></tr>
+      <tr><td><strong>PF-09</strong> Marque blanche KO</td><td class="center"><span class="badge-crit crit-yellow">MODÉRÉ</span></td><td>AXE-06 SaaS multi-tenant</td><td>ENF-03, 06</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Couverture des ENF par les axes</h3>
+  <table class="coverage-table">
+    <thead>
+      <tr><th>ENF</th><th class="center">AXE-01</th><th class="center">AXE-02</th><th class="center">AXE-03</th><th class="center">AXE-04</th><th class="center">AXE-05</th><th class="center">AXE-06</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>ENF-01 Performance</td><td class="center check-mark">✔</td><td class="center check-mark">✔</td><td class="center"></td><td class="center check-mark">✔</td><td class="center"></td><td class="center"></td></tr>
+      <tr><td>ENF-02 Disponibilité</td><td class="center check-mark">✔</td><td class="center check-mark">✔</td><td class="center"></td><td class="center"></td><td class="center"></td><td class="center"></td></tr>
+      <tr><td>ENF-03 Scalabilité</td><td class="center"></td><td class="center"></td><td class="center"></td><td class="center"></td><td class="center"></td><td class="center check-mark">✔</td></tr>
+      <tr><td>ENF-04 Sécurité</td><td class="center"></td><td class="center"></td><td class="center"></td><td class="center"></td><td class="center check-mark">✔</td><td class="center"></td></tr>
+      <tr><td>ENF-05 Maintenabilité</td><td class="center check-mark">✔</td><td class="center"></td><td class="center check-mark">✔</td><td class="center check-mark">✔</td><td class="center"></td><td class="center"></td></tr>
+      <tr><td>ENF-06 Interopérabilité</td><td class="center"></td><td class="center"></td><td class="center"></td><td class="center"></td><td class="center"></td><td class="center check-mark">✔</td></tr>
+      <tr><td>ENF-07 Portabilité</td><td class="center"></td><td class="center"></td><td class="center check-mark">✔</td><td class="center check-mark">✔</td><td class="center"></td><td class="center"></td></tr>
+      <tr><td>ENF-08 Observabilité</td><td class="center"></td><td class="center"></td><td class="center check-mark">✔</td><td class="center"></td><td class="center"></td><td class="center"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="verdict-box">
+    <div class="verdict-title">Résultat</div>
+    <p style="font-size:9.5pt; color:var(--text-mid);">
+      ✅ 100 % des ENF sont couvertes par au moins un axe d'amélioration.<br>
+      ✅ 100 % des points faibles sont tracés vers au moins un axe.
+    </p>
+  </div>
+
+  <div class="page-footer">
+    <span>BricoLoc 2.0 — Annexes</span>
+    <span class="bar"></span>
+    <span>Annexe 04 — Traçabilité</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGES 7-8 — ANNEXE 5 : LEXIQUE
+     ══════════════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <span class="section-num">Annexe 05</span>
+    <h2>Lexique des <strong>termes techniques</strong></h2>
+    <p class="section-ref">Glossaire complet pour les non-techniciens</p>
+  </div>
+
+  <div class="lex-grid">
+    <div class="lex-item"><div class="lex-term">ACID</div><div class="lex-def">Propriétés de fiabilité des transactions : Atomicité, Cohérence, Isolation, Durabilité</div></div>
+    <div class="lex-item"><div class="lex-term">Active Directory (AD)</div><div class="lex-def">Annuaire Microsoft gérant les comptes et droits d'accès de l'entreprise</div></div>
+    <div class="lex-item"><div class="lex-term">AMQP</div><div class="lex-def">Protocole de messagerie asynchrone utilisé par RabbitMQ</div></div>
+    <div class="lex-item"><div class="lex-term">API</div><div class="lex-def">Contrat technique permettant à deux logiciels de communiquer</div></div>
+    <div class="lex-item"><div class="lex-term">API Gateway</div><div class="lex-def">Point d'entrée unique sécurisant et routant les requêtes vers les modules</div></div>
+    <div class="lex-item"><div class="lex-term">API REST</div><div class="lex-def">Style d'API sur HTTP utilisant des ressources et des verbes (GET, POST, PUT, DELETE)</div></div>
+    <div class="lex-item"><div class="lex-term">B2B</div><div class="lex-def">Business-to-Business — ventes entre entreprises</div></div>
+    <div class="lex-item"><div class="lex-term">B2C</div><div class="lex-def">Business-to-Consumer — ventes aux particuliers</div></div>
+    <div class="lex-item"><div class="lex-term">Batch</div><div class="lex-def">Traitement automatique périodique (ici : le CSV quotidien SAP → BricoLoc)</div></div>
+    <div class="lex-item"><div class="lex-term">CI/CD</div><div class="lex-def">Intégration Continue / Déploiement Continu — automatisation tests et déploiement</div></div>
+    <div class="lex-item"><div class="lex-term">CLOUD Act</div><div class="lex-def">Loi US permettant l'accès aux données d'entreprises américaines, même en Europe</div></div>
+    <div class="lex-item"><div class="lex-term">Conteneur / Docker</div><div class="lex-def">Empaquette une application avec ses dépendances pour un déploiement identique partout</div></div>
+    <div class="lex-item"><div class="lex-term">CSV</div><div class="lex-def">Format texte (Comma-Separated Values) — export stocks depuis SAP</div></div>
+    <div class="lex-item"><div class="lex-term">DMZ</div><div class="lex-def">Zone Démilitarisée — réseau exposé à Internet mais isolé du réseau interne</div></div>
+    <div class="lex-item"><div class="lex-term">EJB</div><div class="lex-def">Enterprise JavaBeans — composants serveur de l'architecture actuelle (Java EE)</div></div>
+    <div class="lex-item"><div class="lex-term">Entra ID</div><div class="lex-def">Nouveau nom d'Azure Active Directory, service d'identité cloud Microsoft</div></div>
+    <div class="lex-item"><div class="lex-term">EOL</div><div class="lex-def">End of Life — fin de support officiel d'un logiciel (plus de correctifs de sécurité)</div></div>
+    <div class="lex-item"><div class="lex-term">ERP</div><div class="lex-def">Logiciel de gestion intégré (ici : SAP Business One)</div></div>
+    <div class="lex-item"><div class="lex-term">ESB</div><div class="lex-def">Enterprise Service Bus — middleware centralisant les communications SOA</div></div>
+    <div class="lex-item"><div class="lex-term">Event-Driven</div><div class="lex-def">Architecture où les composants communiquent via événements asynchrones</div></div>
+    <div class="lex-item"><div class="lex-term">FinOps</div><div class="lex-def">Discipline qui optimise et rend prévisibles les coûts du Cloud</div></div>
+    <div class="lex-item"><div class="lex-term">FTP</div><div class="lex-def">Protocole de transfert de fichiers — « versioning » rudimentaire chez BricoLoc</div></div>
+    <div class="lex-item"><div class="lex-term">Green IT</div><div class="lex-def">Réduction de l'empreinte écologique du numérique</div></div>
+    <div class="lex-item"><div class="lex-term">IAM</div><div class="lex-def">Gestion centralisée des identités et des droits d'accès</div></div>
+    <div class="lex-item"><div class="lex-term">IIS</div><div class="lex-def">Serveur web Microsoft hébergeant le service WCF VB.NET</div></div>
+    <div class="lex-item"><div class="lex-term">Java EE</div><div class="lex-def">Java Enterprise Edition — plateforme d'entreprise (remplacée par Jakarta EE)</div></div>
+    <div class="lex-item"><div class="lex-term">JPA</div><div class="lex-def">Java Persistence API — standard d'accès aux bases de données en Java</div></div>
+    <div class="lex-item"><div class="lex-term">JWT</div><div class="lex-def">Jeton numérique signé pour authentifier un utilisateur entre requêtes</div></div>
+    <div class="lex-item"><div class="lex-term">Kubernetes</div><div class="lex-def">Orchestrateur de conteneurs (non retenu — trop complexe pour 5 devs)</div></div>
+    <div class="lex-item"><div class="lex-term">Maven</div><div class="lex-def">Outil de build et gestion de dépendances pour projets Java</div></div>
+    <div class="lex-item"><div class="lex-term">Microservices</div><div class="lex-def">Services très fins, indépendants, chacun avec sa propre base de données</div></div>
+    <div class="lex-item"><div class="lex-term">Monolithe modulaire</div><div class="lex-def">Un seul bloc déployable, organisé en modules isolés avec interfaces définies</div></div>
+    <div class="lex-item"><div class="lex-term">Multi-tenant</div><div class="lex-def">Plusieurs clients partagent une même instance tout en isolant leurs données</div></div>
+    <div class="lex-item"><div class="lex-term">N-tiers</div><div class="lex-def">Architecture en couches (présentation → logique → données) — modèle actuel</div></div>
+    <div class="lex-item"><div class="lex-term">OpenAPI / Swagger</div><div class="lex-def">Standard de documentation interactive d'APIs REST</div></div>
+    <div class="lex-item"><div class="lex-term">P2P</div><div class="lex-def">Peer-to-Peer — échange direct entre utilisateurs (location entre particuliers)</div></div>
+    <div class="lex-item"><div class="lex-term">P95</div><div class="lex-def">95ème percentile — 95 % des requêtes traitées sous ce temps</div></div>
+    <div class="lex-item"><div class="lex-term">PCI-DSS</div><div class="lex-def">Norme de sécurité des paiements par carte bancaire</div></div>
+    <div class="lex-item"><div class="lex-term">PL/SQL</div><div class="lex-def">Langage procédural d'Oracle pour la logique en base de données</div></div>
+    <div class="lex-item"><div class="lex-term">PL/pgSQL</div><div class="lex-def">Équivalent PostgreSQL du PL/SQL — facilite la migration depuis Oracle</div></div>
+
+    <div class="lex-item"><div class="lex-term">RabbitMQ</div><div class="lex-def">Message broker open-source choisi pour la synchronisation temps réel des stocks</div></div>
+    <div class="lex-item"><div class="lex-term">RBAC</div><div class="lex-def">Contrôle d'accès par rôles (CLIENT, PRO, LOGISTICIEN, ADMIN, PARTENAIRE)</div></div>
+    <div class="lex-item"><div class="lex-term">Redis</div><div class="lex-def">Base en mémoire utilisée comme cache pour accélérer le catalogue</div></div>
+    <div class="lex-item"><div class="lex-term">RGPD</div><div class="lex-def">Loi européenne sur la protection des données personnelles</div></div>
+    <div class="lex-item"><div class="lex-term">RPO</div><div class="lex-def">Perte de données maximale acceptable en cas d'incident (cible : < 1h)</div></div>
+    <div class="lex-item"><div class="lex-term">RTO</div><div class="lex-def">Délai maximal de remise en service après incident (cible : < 4h)</div></div>
+    <div class="lex-item"><div class="lex-term">SaaS</div><div class="lex-def">Logiciel hébergé et accessible en ligne (modèle cible marque blanche)</div></div>
+    <div class="lex-item"><div class="lex-term">SAP Business One</div><div class="lex-def">ERP utilisé par BricoLoc pour la logistique et les stocks</div></div>
+    <div class="lex-item"><div class="lex-term">Scale-out</div><div class="lex-def">Ajout de serveurs pour absorber plus de charge</div></div>
+    <div class="lex-item"><div class="lex-term">SLA</div><div class="lex-def">Engagement de niveau de service (cible : ≥ 99,5 % de disponibilité)</div></div>
+    <div class="lex-item"><div class="lex-term">SOA</div><div class="lex-def">Architecture orientée services avec gouvernance centralisée</div></div>
+    <div class="lex-item"><div class="lex-term">SPOF</div><div class="lex-def">Composant unique dont la panne bloque tout le système</div></div>
+    <div class="lex-item"><div class="lex-term">Spring Boot</div><div class="lex-def">Framework Java open-source retenu pour BricoLoc 2.0</div></div>
+    <div class="lex-item"><div class="lex-term">Strangler Fig</div><div class="lex-def">Migration progressive : le nouveau enveloppe l'ancien, module par module</div></div>
+    <div class="lex-item"><div class="lex-term">TCO</div><div class="lex-def">Coût total de possession (licence + infra + formation + exploitation)</div></div>
+    <div class="lex-item"><div class="lex-term">vRack</div><div class="lex-def">Réseau privé virtuel OVHcloud isolant les serveurs du réseau public</div></div>
+    <div class="lex-item"><div class="lex-term">WAR / JAR</div><div class="lex-def">Formats de packaging Java déployables sur un serveur d'application</div></div>
+    <div class="lex-item"><div class="lex-term">WCF</div><div class="lex-def">Framework Microsoft pour services web — composant BricoLoc dont le code est perdu</div></div>
+    <span>BricoLoc 2.0 — Annexes</span>
+    <span class="bar"></span>
+    <span>Annexe 05 — Lexique</span>
+  </div>
+</div>
+
+</body>
+</html>

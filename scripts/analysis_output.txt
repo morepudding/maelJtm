@@ -1,0 +1,152 @@
+Slide dimensions: 13.333 x 7.500 inches
+Number of slides: 22
+
+=== SLIDE 1 ===
+  BG color: #E5E7E6
+  Shapes: 8
+  Title/Main text: 'BricoLoc 2.0'
+  Other texts (4): Architecture logicielle — Dossier de conception; Master 1 Architecte d'Application — CESI
+  Notes: 'Bonjour, nous allons vous présenter notre dossier de conception pour BricoLoc 2.0, le projet de refonte de l'architectur'
+
+=== SLIDE 2 ===
+  BG color: #E5E7E6
+  Shapes: 65
+  Title/Main text: 'Sommaire'
+  Other texts (25): 1; Organisation du groupe
+  Notes: 'Voici le plan de la présentation. N'hésitez pas à nous arrêter si vous avez des questions à tout moment.'
+
+=== SLIDE 3 ===
+  BG color: #E5E7E6
+  Shapes: 41
+  Title/Main text: '1. Organisation du groupe'
+  Other texts (20): Equipe initiale : 4 membres — Steven (Analyste) a quitté le groupe en cours de projet; Romain
+  Notes: 'Notre équipe a été réduite de 4 à 3 membres suite au départ de Steven. Nous avons absorbé sa charge sans retard grâce à '
+
+=== SLIDE 4 ===
+  BG color: #E5E7E6
+  Shapes: 56
+  Title/Main text: '2. Contexte & objectifs'
+  Other texts (29): BricoLoc — Location d'outils de bricolage; Stack obsolète
+  Notes: 'BricoLoc est une entreprise de location d'outils. Le système actuel date de 2013 et cause des pertes de clients depuis 2'
+
+=== SLIDE 5 ===
+  BG color: #E5E7E6
+  Shapes: 48
+  Title/Main text: 'Démarche de conception'
+  Other texts (28): 1; Analyse del'existant
+  Notes: 'Nous avons suivi une démarche structurée en 7 étapes. Chaque étape alimente la suivante : on ne conçoit rien sans avoir '
+
+=== SLIDE 6 ===
+  BG color: #93441A
+  Shapes: 5
+  Title/Main text: 'Analyse de l'existant'
+  Other texts (2): Comprendre avant de concevoir; 6 / 23
+
+=== SLIDE 7 ===
+  BG color: #E5E7E6
+  Shapes: 6
+  Title/Main text: '7 / 23'
+  Other texts (1): 3. Schéma du SI existant
+  Notes: 'Le SI actuel souffre de 9 anomalies architecturales majeures. Notez en particulier : l'accès JDBC direct du front-end à '
+
+=== SLIDE 8 ===
+  BG color: #E5E7E6
+  Shapes: 56
+  Title/Main text: '4. Points faibles identifiés'
+  Other texts (30): Critique; Modéré
+  Notes: '9 points faibles identifiés et classés par criticité décroissante. Les 5 premiers sont critiques et bloquent toute évolu'
+
+=== SLIDE 9 ===
+  BG color: #E5E7E6
+  Shapes: 74
+  Title/Main text: '5. Exigences Non Fonctionnelles'
+  Other texts (29): ID; Exigence
+  Notes: '8 exigences non fonctionnelles classées par priorité. Performance et disponibilité sont au niveau 5/5 car ce sont les ca'
+
+=== SLIDE 10 ===
+  BG color: #E5E7E6
+  Shapes: 44
+  Title/Main text: '6. Axes d'amélioration'
+  Other texts (19): 1; WebLogic monolithique→ 9 modules Spring Boot 3
+  Notes: '6 axes d'amélioration, chacun tracé vers les points faibles qu'il résout. C'est notre feuille de route stratégique pour '
+
+=== SLIDE 11 ===
+  BG color: #E5E7E6
+  Shapes: 38
+  Title/Main text: '7. Comparaison des approches possibles'
+  Other texts (20): Application modulaire; Adapté à notre équipe de 5
+  Notes: 'Nous avons comparé 5 approches avec notre matrice multicritères. Les deux meilleures sont l'application modulaire et la '
+
+=== SLIDE 12 ===
+  BG color: #E5E7E6
+  Shapes: 29
+  Title/Main text: '8. Styles retenus & justification'
+  Other texts (12): Monolithe modulaire; Coeur de l'application
+  Notes: '3 styles architecturaux combinés : le monolithe modulaire donne la structure, l'événementiel gère les stocks en temps ré'
+
+=== SLIDE 13 ===
+  BG color: #E5E7E6
+  Shapes: 38
+  Title/Main text: '9. Choix technologiques'
+  Other texts (18): Moteur applicatif; Spring Boot 3
+  Notes: 'Technologies choisies via matrice multicritères. Spring Boot car maîtrisé par l'équipe. PostgreSQL car gratuit et perfor'
+
+=== SLIDE 14 ===
+  BG color: #E5E7E6
+  Shapes: 37
+  Title/Main text: '9b. Focus : Le verdict de l'hébergeur Cloud'
+  Other texts (18): Matrice basée sur 5 critères : Légal, Sécurité, Indépendance, Finance, Écologie; 2ème
+  Notes: 'Le choix s'est porté sur OVHcloud. Pourquoi ? Parce que l'intégration technologique ne fait pas tout : nous devons proté'
+
+=== SLIDE 15 ===
+  BG color: #93441A
+  Shapes: 5
+  Title/Main text: 'Architecture & Conception'
+  Other texts (2): Du diagnostic aux solutions; 15 / 23
+
+=== SLIDE 16 ===
+  BG color: #E5E7E6
+  Shapes: 6
+  Title/Main text: '10. Architecture cible — Infrastructure OVHcloud'
+  Other texts (1): 16 / 23
+  Notes: 'Le schéma cible montre comment les choix technologiques s'articulent dans une infrastructure OVHcloud : DMZ sécurisée vi'
+
+=== SLIDE 17 ===
+  BG color: #E5E7E6
+  Shapes: 56
+  Title/Main text: '10b. Les 9 modules de BricoLoc 2.0'
+  Other texts (23): Un écosystème modulaire interdépendant; BricoLoc
+  Notes: 'Visualisation des 9 modules en cercle vertueux. Au centre, le moteur BricoLoc 2.0. Chaque module est indépendant mais pa'
+
+=== SLIDE 18 ===
+  BG color: #93441A
+  Shapes: 5
+  Title/Main text: 'Mise en œuvre'
+  Other texts (2): De la conception au terrain; 18 / 23
+
+=== SLIDE 19 ===
+  BG color: #E5E7E6
+  Shapes: 54
+  Title/Main text: 'Règles d'architecture (garde-fous)'
+  Other texts (26): R01; Isolation
+  Notes: '8 garde-fous pour éviter de reproduire les erreurs du système actuel. Chaque règle est tracée vers un point faible ident'
+
+=== SLIDE 20 ===
+  BG color: #E5E7E6
+  Shapes: 55
+  Title/Main text: 'Répartition de l'équipe de développement'
+  Other texts (26): MH; Marion H.
+  Notes: 'Chaque développeur a un périmètre défini et une spécialité. Pas de conflit, charge répartie équitablement. Les 8 000 lig'
+
+=== SLIDE 21 ===
+  BG color: #E5E7E6
+  Shapes: 26
+  Title/Main text: '12. Conclusion & perspectives'
+  Other texts (14): Une architectureadaptée; Pensée pour une équipe de 5,avec des technologiesque nous maîtrisons déjà.
+  Notes: '3 points clés à retenir : architecture adaptée à l'équipe, migration progressive sans coupure, et tous les problèmes act'
+
+=== SLIDE 22 ===
+  BG color: #E5E7E6
+  Shapes: 8
+  Title/Main text: 'Merci pour votre attention'
+  Other texts (3): Romain  ·  Maël  ·  Loris; Master 1 Architecte d'Application — CESI
